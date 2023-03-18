@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:checkableBehavior="single"
+        android:enabled="true"
+        android:menuCategory="system">
+        <item
+            android:id="@+id/fragmentShowLocationData"
+            android:icon="@drawable/home_menu_icon"
+            android:title="@string/home" />
+        <item
+            android:id="@+id/fragmentFavoritesPage"
+            android:icon="@drawable/favorite_menu_icon"
+            android:title="@string/favorites" />
+        <item
+            android:id="@+id/fragmentSettingPage"
+            android:icon="@drawable/settings_menu_icon"
+            android:title="@string/setting" />
+        <item
+            android:id="@+id/fragmentAlertsPage"
+            android:icon="@drawable/notifications_alert_menu_icon"
+            android:title="@string/alerts" />
+    </group>
+</menu>

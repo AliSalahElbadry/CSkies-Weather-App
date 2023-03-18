@@ -2,10 +2,15 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 <item>
     <shape android:shape="rectangle">
-        <solid android:color="@color/white">
-
-        </solid>
-        <corners android:topRightRadius="120dp" android:topLeftRadius="120dp">
+        <gradient
+            android:centerColor="#4389FF"
+            android:startColor="#1B8BC8"
+            android:endColor="#4CD9EC"
+            android:angle="135"
+            android:gradientRadius="12dp"
+            android:type="linear"
+            />
+        <corners android:radius="100dp">
 
         </corners>
     </shape>

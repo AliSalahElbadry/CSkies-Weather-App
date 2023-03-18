@@ -4,4 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ActivityHome"/>
+    tools:context=".ActivityHome">
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/mdrow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".ActivityHome">
+
+
+        <fragment
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/drower_graph"
+            tools:layout="@layout/fragment_show_location_data" />
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="#9C27B0"
+            app:headerLayout="@layout/header_drower_layout"
+            app:itemBackground="@drawable/menu_item_back"
+            app:itemIconTint="@android:color/holo_blue_bright"
+            app:itemRippleColor="#9C27B0"
+            app:itemShapeFillColor="@color/purple_200"
+            app:itemTextColor="#FFFFFF"
+            app:menu="@menu/main_menu"
+            tools:ignore="VisualLintBounds" />
+    </androidx.drawerlayout.widget.DrawerLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
