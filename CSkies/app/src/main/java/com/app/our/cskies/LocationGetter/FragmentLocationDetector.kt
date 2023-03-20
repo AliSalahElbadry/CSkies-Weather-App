@@ -2,6 +2,7 @@ package com.app.our.cskies.LocationGetter
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -12,7 +13,6 @@ import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,11 +21,12 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
-import com.app.our.cskies.ActivityHome
 import com.app.our.cskies.R
-import com.app.our.cskies.messages.Toasts
-import com.app.our.cskies.model.Setting
-import com.app.our.cskies.model.UserCurrentLocation
+import com.app.our.cskies.SplashCall
+import com.app.our.cskies.utils.Dialogs
+import com.app.our.cskies.utils.Setting
+import com.app.our.cskies.utils.UserCurrentLocation
+import com.app.our.cskies.shard_pref.SharedPrefOps
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
@@ -46,8 +47,8 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener  {
     lateinit var mGoogleMap: GoogleMap
     var pinSelected:Boolean=false
     private lateinit var mMapView: MapView
-    var mode:Int=if(Setting.location==Setting.Location.GPS)0 else 1
-
+    var mode:Int=if(Setting.location== Setting.Location.GPS)0 else 1
+    lateinit var progress: ProgressDialog
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -62,10 +63,14 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener  {
             btnDoneMap.setOnClickListener{
                 if(pinSelected)
                 {
-                    val intent=Intent(requireActivity(),ActivityHome::class.java)
-                    startActivity(intent)
+                    val pref=SharedPrefOps(requireContext().applicationContext)
+                    pref.insertInData()
+                    pref.saveLastLocation()
+                    (requireActivity() as SplashCall).showHome()
+                    mMapView.onDestroy()
+                    dismiss()
                 }else{
-                    Toasts.SnakeToast(it,"Please Select Location First")
+                    Dialogs.SnakeToast(it,"Please Select Location First")
                 }
             }
             mMapView = view.findViewById(R.id.mapView)
@@ -79,17 +84,36 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener  {
             setUpMap()
         }else if(mode==0)
         {
-            view.visibility=View.GONE
+            view.visibility=View.INVISIBLE
+            progress= ProgressDialog(requireContext())
+            progress.show()
             getLastLocation()
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if(mode==0)getLastLocation()
+    }
+
+    override fun onStop() {
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
     @SuppressLint("MissingPermission")
-    fun requestLocationUpdates(request : LocationRequest, callback: LocationCallback) : Task<Void> {
+    fun requestLocationUpdates(
+        request: LocationRequest,
+        callback: LocationCallback,
+        myLooper: Looper
+    ) : Task<Void> {
         fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(this.requireActivity())
         return fusedLocationProviderClient.requestLocationUpdates(
             request,
-            callback, Looper.myLooper()
+            callback, myLooper
         )
     }
 
@@ -112,27 +136,25 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener  {
         @RequiresApi(Build.VERSION_CODES.TIRAMISU)
         override fun onLocationResult(result: LocationResult) {
             super.onLocationResult(result)
-
+            progress.dismiss()
             val latitude=result.lastLocation?.latitude
             val longtude=result.lastLocation?.longitude
             UserCurrentLocation.latitude=latitude.toString()
             UserCurrentLocation.longitude=longtude.toString()
-            Log.e("",UserCurrentLocation.latitude?:"00000000000000000000")
+            val pref=SharedPrefOps(requireActivity().applicationContext)
+            pref.insertInData()
+            pref.saveLastLocation()
             fusedLocationProviderClient.removeLocationUpdates(this)
-            val intent=Intent(requireActivity(),ActivityHome::class.java)
-            startActivity(intent)
+            (requireActivity() as SplashCall).showHome()
             dismiss()
-
         }
     }
 
     private fun requestNewLoaction(){
-        val request=LocationRequest.create().apply {
-            interval = 2000
-            fastestInterval = 1000
-            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        }
-        requestLocationUpdates(request,myCallback)
+        val request=LocationRequest()
+        request.priority=LocationRequest.PRIORITY_HIGH_ACCURACY
+        request.interval=0
+        requestLocationUpdates(request,myCallback, Looper.myLooper()!!)
     }
 
     private fun checkPermissions(): Boolean{
@@ -178,11 +200,13 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener  {
          mMapView.getMapAsync { googleMap -> mGoogleMap = googleMap
 
              mGoogleMap.setOnMapLongClickListener{
+                 val latitude=it?.latitude
+                 val longitude=it?.longitude
+                 UserCurrentLocation.latitude=latitude.toString()
+                 UserCurrentLocation.longitude=longitude.toString()
                  pinSelected=true
                  mGoogleMap.clear()
                  mGoogleMap.addMarker(MarkerOptions().position(it))
-                 UserCurrentLocation.longitude=it.latitude.toString()
-                 UserCurrentLocation.longitude=it.longitude.toString()
              }
          }
     }

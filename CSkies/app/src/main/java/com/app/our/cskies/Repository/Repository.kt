@@ -1,27 +1,75 @@
 package com.app.our.cskies.Repository
 
+import android.content.Context
+import com.app.our.cskies.dp.LocalDataSource
+import com.app.our.cskies.dp.LocalSourceImpl
+import com.app.our.cskies.dp.model.Alert
+import com.app.our.cskies.dp.model.DayWeather
+import com.app.our.cskies.dp.model.HourWeather
+import com.app.our.cskies.dp.model.Location
+import com.app.our.cskies.model.LocationData
 import com.app.our.cskies.network.ApiState
 import com.app.our.cskies.network.RemoteSourceImpl
+import kotlinx.coroutines.flow.Flow
 
 
-class Repository private constructor(): RepositoryInterface {
-    private val remoteSource:RemoteSourceImpl?=RemoteSourceImpl.getInstance()
+class Repository private constructor(context: Context): RepositoryInterface {
+    private val remoteSource:RemoteSourceImpl=RemoteSourceImpl.getInstance()!!
+    private val localDataSource:LocalDataSource=LocalSourceImpl.getInstance(context)
     override suspend fun getWeatherData(
         latitude: String,
         longitude: String,
         execlude: String,
         units: String,
         lang: String
-    ): ApiState {
-       return remoteSource?.getWeatherData(latitude,longitude, execlude, units, lang)!!
+    ): Flow<ApiState> {
+       return remoteSource.getWeatherData(latitude,longitude, execlude, units, lang)
     }
+
+    override suspend fun insertLocation(location: LocationData) {
+        localDataSource.insertLocation(location)
+    }
+
+    override suspend fun insertAlert(alert: Alert) {
+      localDataSource.insertAlert(alert)
+    }
+
+    override suspend fun deleteLocation(location: LocationData) {
+        localDataSource.deleteLocation(location)
+    }
+
+    override suspend fun deleteAlert(id: Int) {
+        localDataSource.deleteAlert(id)
+    }
+
+    override suspend fun getListOfFavLocations(fav: Boolean): Flow<List<Location>> {
+       return localDataSource.getListOfFavLocations(true)
+    }
+
+    override suspend fun selectDaysOfLocation(address: String): Flow<List<DayWeather>> {
+       return localDataSource.selectDaysOfLocation(address)
+    }
+
+    override suspend fun selectHoursInLocation(address: String): Flow<List<HourWeather>> {
+      return localDataSource.selectHoursInLocation(address)
+    }
+
+    override suspend fun getCurrentLocation(isCurrent: Boolean): Flow<Location> {
+       return localDataSource.getCurrentLocation(true)
+    }
+
+    override suspend fun getListOfAlerts(): Flow<List<Alert>> {
+      return localDataSource.getListOfAlerts()
+    }
+
+
     companion object{
         private var repository: Repository?=null
-        fun getInstance(): Repository
+        fun getInstance(context: Context): Repository
         {
             if(repository ==null)
             {
-                repository = Repository()
+                repository = Repository(context)
             }
             return repository!!
         }

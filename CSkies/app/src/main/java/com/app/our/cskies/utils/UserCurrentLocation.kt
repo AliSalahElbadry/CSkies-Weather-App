@@ -1,4 +1,4 @@
-package com.app.our.cskies.model
+package com.app.our.cskies.utils
 
 object UserCurrentLocation {
     var latitude:String?=null

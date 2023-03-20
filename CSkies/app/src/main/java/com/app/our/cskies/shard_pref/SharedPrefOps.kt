@@ -2,7 +2,8 @@ package com.app.our.cskies.shard_pref
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.app.our.cskies.model.Setting
+import com.app.our.cskies.utils.Setting
+import com.app.our.cskies.utils.UserCurrentLocation
 
 class SharedPrefOps( context: Context) {
 
@@ -12,7 +13,7 @@ class SharedPrefOps( context: Context) {
        val editor=sharedPreferences.edit()
         if(Setting.location!=null)
         {
-            val res=if(Setting.location==Setting.Location.GPS) 0 else 1
+            val res=if(Setting.location== Setting.Location.GPS) 0 else 1
             editor.putInt("location",res)
         }
         if(Setting.temperature!=null)
@@ -26,17 +27,17 @@ class SharedPrefOps( context: Context) {
         }
         if(Setting.lang!=null)
         {
-            val res=if(Setting.lang==Setting.Lang.AR) 0 else 1
+            val res=if(Setting.lang== Setting.Lang.AR) 0 else 1
             editor.putInt("lang",res)
         }
         if(Setting.wSpeed!=null)
         {
-            val res=if(Setting.wSpeed==Setting.WSpeed.M_S) 0 else 1
+            val res=if(Setting.wSpeed== Setting.WSpeed.M_S) 0 else 1
             editor.putInt("wSpeed",res)
         }
         if(Setting.notificationState!=null)
         {
-            val res=if(Setting.notificationState==Setting.NotificationState.OFF) 0 else 1
+            val res=if(Setting.notificationState== Setting.NotificationState.OFF) 0 else 1
             editor.putInt("notificationState",res)
         }
         editor.apply()
@@ -60,8 +61,8 @@ class SharedPrefOps( context: Context) {
         }
         Setting.temperature=when(sharedPreferences.getInt("temperature",-1))
         {
-            0->Setting.Temperature.C
-            1->Setting.Temperature.K
+            0-> Setting.Temperature.C
+            1-> Setting.Temperature.K
             else-> Setting.Temperature.F
         }
         Setting.notificationState=if(sharedPreferences.getInt("notificationState",-1)==0)
@@ -70,5 +71,15 @@ class SharedPrefOps( context: Context) {
         }else{
             Setting.NotificationState.ON
         }
+    }
+    fun saveLastLocation(){
+       val editor= sharedPreferences.edit()
+        editor.putString("locationLat", UserCurrentLocation.latitude)
+        editor.putString("locationLon", UserCurrentLocation.longitude)
+        editor.apply()
+    }
+    fun loadLocationData(){
+       UserCurrentLocation.latitude=sharedPreferences.getString("locationLat",null)
+        UserCurrentLocation.longitude=sharedPreferences.getString("locationLon",null)
     }
 }

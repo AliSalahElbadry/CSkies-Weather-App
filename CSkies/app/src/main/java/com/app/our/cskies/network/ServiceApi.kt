@@ -1,8 +1,8 @@
 package com.app.our.cskies.network
 
+import com.app.our.cskies.utils.Constants
 import com.app.our.cskies.network.model.WeatherLocationData
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ServiceApi{
@@ -12,5 +12,6 @@ interface ServiceApi{
                                 @Query("exclude") execlude:String="weekly",
                                 @Query("units") units:String="metric",
                                 @Query("lang") lang:String="en",
-                                @Query("appid") appid:String=Constants.apiKey): WeatherLocationData
+                                @Query("appid") appid:String= Constants.apiKey): WeatherLocationData
+
 }

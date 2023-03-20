@@ -8,5 +8,5 @@ interface RemoteSource {
                        longitude:String,
                        execlude:String="weekly",
                        units:String="metric",
-                       lang:String="en",):ApiState
+                       lang:String="en",):Flow<ApiState>
 }

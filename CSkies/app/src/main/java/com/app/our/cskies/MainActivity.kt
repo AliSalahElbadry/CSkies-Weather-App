@@ -1,45 +1,40 @@
 package com.app.our.cskies
 
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation.findNavController
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI.setupWithNavController
-import com.google.android.material.navigation.NavigationView
+import com.app.our.cskies.databinding.ActivityMainBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class ActivityHome : AppCompatActivity() {
-   lateinit var drawerLayout: DrawerLayout
-   lateinit var navigationView: NavigationView
-   var index=0
+class ActivityMain : AppCompatActivity() {
+    lateinit var binding:ActivityMainBinding
+    var index=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setContentView(R.layout.activity_home)
+        binding= ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         val actionBar = supportActionBar
-        drawerLayout = findViewById(R.id.mdrow)
-        navigationView = findViewById(R.id.nav_layout)
         actionBar!!.setHomeAsUpIndicator(R.drawable.baseline_menu_24)
         actionBar.setDisplayShowHomeEnabled(true)
         actionBar.setDisplayHomeAsUpEnabled(true)
-        val con = findNavController(this, R.id.nav_host_fragment)
-        setupWithNavController(navigationView, con)
+        val con: NavController = Navigation.findNavController(this, R.id.my_host_fragment)
+        setupWithNavController(binding.navLayout, navController = con)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                drawerLayout.closeDrawer(GravityCompat.START)
-               } else {
-                drawerLayout.openDrawer(GravityCompat.START)
-               }
+                if (binding.mdrow.isDrawerOpen(GravityCompat.START)) {
+                    binding.mdrow.closeDrawer(GravityCompat.START)
+                } else {
+                    binding.mdrow.openDrawer(GravityCompat.START)
+                }
             }
         }
         return super.onOptionsItemSelected(item)

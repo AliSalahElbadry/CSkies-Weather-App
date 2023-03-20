@@ -1,5 +1,8 @@
 package com.app.our.cskies.network
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+
 class RemoteSourceImpl private constructor():RemoteSource {
     override suspend fun getWeatherData(
         latitude: String,
@@ -7,9 +10,9 @@ class RemoteSourceImpl private constructor():RemoteSource {
         execlude: String,
         units: String,
         lang: String
-    ): ApiState {
+    ): Flow<ApiState> {
         return try{
-              ApiState.Success(
+              flow{emit(ApiState.Success(
                   Retrofit.myService.getWeatherInfo(
                       latitude,
                       longitude,
@@ -17,9 +20,9 @@ class RemoteSourceImpl private constructor():RemoteSource {
                       units,
                       lang
                   )
-              )
+              ))}
         }catch (e:Exception) {
-            ApiState.Failure(e.message?:"Fail")
+          flow{emit(  ApiState.Failure(e.message?:"Fail"))}
         }
     }
     companion object{
