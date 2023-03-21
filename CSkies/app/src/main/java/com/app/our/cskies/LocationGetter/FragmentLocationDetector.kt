@@ -136,7 +136,7 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener  {
         @RequiresApi(Build.VERSION_CODES.TIRAMISU)
         override fun onLocationResult(result: LocationResult) {
             super.onLocationResult(result)
-            progress.dismiss()
+
             val latitude=result.lastLocation?.latitude
             val longtude=result.lastLocation?.longitude
             UserCurrentLocation.latitude=latitude.toString()
@@ -145,6 +145,7 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener  {
             pref.insertInData()
             pref.saveLastLocation()
             fusedLocationProviderClient.removeLocationUpdates(this)
+            progress.dismiss()
             (requireActivity() as SplashCall).showHome()
             dismiss()
         }

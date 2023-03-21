@@ -5,8 +5,6 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.content.res.Configuration
 import android.content.res.Resources
-import android.location.Address
-import android.location.Geocoder
 import android.os.Build
 import android.view.View
 import java.util.*
@@ -37,43 +35,7 @@ object LanguageUtils {
             .replace(",", "")
             .replace(" ", "")
     }
-    fun getAddressEnglish(context: Context, lat: Double?, lon: Double?):String
-    {
-        var address:MutableList<Address>?=null
-        val geocoder= Geocoder(context)
-        address =geocoder.getFromLocation(lat!!,lon!!,1)
-        if (address?.isEmpty()==true)
-        {
-            return "Unkown location"
-        }
-        else if (address?.get(0)?.countryName.isNullOrEmpty())
-        {
-            return "Unkown Country"
-        } else if (address?.get(0)?.adminArea.isNullOrEmpty())
-        {
-            return address?.get(0)?.countryName.toString()
-        }
-        else return address?.get(0)?.countryName.toString()+" , "+address?.get(0)?.adminArea
-    }
-    fun getAddressArabic(context: Context, lat:Double, lon:Double):String
-    {
-        var address:MutableList<Address>?=null
-        val geocoder= Geocoder(context, Locale("ar"))
-        address =geocoder.getFromLocation(lat,lon,1)
-        if (address?.isEmpty()==true)
-        {
-            return "Unkown location"
-        }
-        else if (address?.get(0)?.countryName.isNullOrEmpty())
-        {
-            return "Unkown Country"
-        }
-        else if (address?.get(0)?.adminArea.isNullOrEmpty())
-        {
-            return address?.get(0)?.countryName.toString()
-        }
-        else return address?.get(0)?.countryName.toString()+" , "+address?.get(0)?.adminArea
-    }
+
 
     fun setViewLanguage(view: View, lang:Setting.Lang) {
         val languageToLoad =if(lang==Setting.Lang.AR)"ar" else "en"
@@ -85,6 +47,11 @@ object LanguageUtils {
             config,
             view.context.resources.displayMetrics
         )
+    }
+    fun setAppLayoutDirections(locale:String,context:Context){
+        val configuration: Configuration = context.resources.configuration
+        configuration.setLayoutDirection(Locale(locale))
+        context.resources.updateConfiguration(configuration, context.resources.displayMetrics)
     }
     fun updateContextLanguage(context: Context, language: String): Boolean {
         val locale = Locale(language)
@@ -103,11 +70,11 @@ object LanguageUtils {
         val config: Configuration = resources.configuration
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
         {
-            config.setLocale(Locale(localeCode.lowercase(Locale.getDefault())))
+            config.setLocale(Locale(localeCode))
         }
         else
         {
-            config.locale = Locale(localeCode.lowercase(Locale.getDefault()))
+            config.locale = Locale(localeCode)
         }
         resources.updateConfiguration(config, dm)
     }

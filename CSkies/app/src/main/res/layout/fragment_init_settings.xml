@@ -14,7 +14,7 @@
             android:layout_width="261dp"
             android:layout_height="48dp"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/menu_item_back"
+            android:background="@drawable/home_back_week_days"
             android:gravity="center_horizontal|center_vertical"
             android:text="@string/initial_setting"
             android:textAlignment="gravity"

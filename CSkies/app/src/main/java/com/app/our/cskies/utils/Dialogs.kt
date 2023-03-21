@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Color
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -31,5 +32,16 @@ object Dialogs {
         progressDialog.setCancelable(false) // blocks UI interaction
         return progressDialog
     }
+  fun getAletDialogBuilder(context: Context,title:String,message:String): AlertDialog.Builder {
+      val builder = AlertDialog.Builder(context)
 
+      builder.setTitle(title)
+
+      builder.setMessage(message)
+
+      builder.setIcon(android.R.drawable.ic_dialog_alert)
+
+     return builder
+
+  }
 }

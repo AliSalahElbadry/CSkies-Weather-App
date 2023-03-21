@@ -10,14 +10,18 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.app.our.cskies.databinding.ActivityMainBinding
+import com.app.our.cskies.utils.LanguageUtils
+import com.app.our.cskies.utils.Setting
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.*
 
 class ActivityMain : AppCompatActivity() {
     lateinit var binding:ActivityMainBinding
     var index=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        LanguageUtils.setAppLocale(Setting.getLang(),this)
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val actionBar = supportActionBar

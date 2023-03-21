@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:elevation="45dp">
+    android:elevation="45dp"
+    android:layoutDirection="locale">
 
     <ImageView
         android:id="@+id/imageView_drower_icon"

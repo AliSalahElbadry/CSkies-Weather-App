@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CSkies</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="initial_setting">الاعدادات الاولية</string>
+    <string name="location_method">طريقة معرفة الموقع</string>
+    <string name="map">خرائط</string>
+    <string name="gps">GPS</string>
+    <string name="notification">الاشعارات</string>
+    <string name="on">يعمل</string>
+    <string name="off">لا يعمل</string>
+    <string name="english">انجليزية</string>
+    <string name="arabic">عربية</string>
+    <string name="language">اللغة</string>
+    <string name="done">تم</string>
+    <string name="home">الرئيسية</string>
+    <string name="setting">الاعدادات</string>
+    <string name="favorites">المفضلة</string>
+    <string name="alerts">التنبيهات</string>
+    <string name="confirm_location">تأكيد الموقع</string>
+</resources>

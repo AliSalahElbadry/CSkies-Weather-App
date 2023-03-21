@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
+    android:layoutDirection="locale"
     app:cardBackgroundColor="#FFFFFF"
     app:cardCornerRadius="25dp"
     app:cardElevation="12dp">
@@ -14,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/day_item_background"
+        android:layoutDirection="locale"
         android:orientation="horizontal">
 
         <TextView
@@ -25,6 +27,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:gravity="center_horizontal|center_vertical"
+            android:layoutDirection="locale"
             android:text="ToMorro"
             android:textAlignment="center"
             android:textSize="20sp"
@@ -35,6 +38,7 @@
             android:layout_width="57dp"
             android:layout_height="41dp"
             android:layout_gravity="center_horizontal|center_vertical"
+            android:layoutDirection="locale"
             app:srcCompat="@drawable/cc" />
 
         <TextView
@@ -43,6 +47,7 @@
             android:layout_height="43dp"
             android:layout_gravity="center_horizontal|center_vertical"
             android:gravity="center_horizontal|center_vertical"
+            android:layoutDirection="locale"
             android:text="Description"
             android:textAlignment="center"
             android:textSize="20sp"
@@ -55,6 +60,7 @@
             android:layout_gravity="center_horizontal|center_vertical|end"
             android:layout_marginEnd="10dp"
             android:gravity="center_horizontal|center_vertical"
+            android:layoutDirection="locale"
             android:text="32/45*C"
             android:textAlignment="center"
             android:textSize="20sp"

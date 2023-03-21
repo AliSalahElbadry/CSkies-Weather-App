@@ -12,7 +12,8 @@ class RemoteSourceImpl private constructor():RemoteSource {
         lang: String
     ): Flow<ApiState> {
         return try{
-              flow{emit(ApiState.Success(
+              flow{
+                  emit(ApiState.Success(
                   Retrofit.myService.getWeatherInfo(
                       latitude,
                       longitude,

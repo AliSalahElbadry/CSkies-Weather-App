@@ -18,7 +18,6 @@ class TimeUtilsTest {
         //Then
        assertEquals("11:12",cat)
     }
-
     @Test
     fun formatTimeToArabic_LongDate_returnHHMM() {
         //Getting

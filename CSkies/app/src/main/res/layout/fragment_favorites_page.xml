@@ -15,12 +15,11 @@
             android:id="@+id/imageView"
             android:layout_width="277dp"
             android:layout_height="258dp"
-            android:src="@drawable/cc"
+            android:src="@drawable/favorite_location_back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/favorite_location_back" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"

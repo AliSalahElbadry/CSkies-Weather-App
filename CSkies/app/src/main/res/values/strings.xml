@@ -17,4 +17,12 @@
     <string name="favorites">Favorites</string>
     <string name="alerts">Alerts</string>
     <string name="confirm_location">Confirm Location</string>
+    <string name="temperature">Temperature</string>
+    <string name="m_s">M/S</string>
+    <string name="mile_h">Mile/H</string>
+    <string name="wind_speed">Wind Speed</string>
+    <string name="fehrienhit">Fehrienhit</string>
+    <string name="celisus">Celisus</string>
+    <string name="kelven">Kelven</string>
+    <string name="apply_changes">Apply Changes</string>
 </resources>

@@ -1,21 +1,13 @@
 package com.app.our.cskies.utils
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.ContextWrapper
-import android.content.res.Configuration
-import android.content.res.Resources
-import android.location.Address
-import android.location.Geocoder
 import android.os.Build
-import android.view.View
 import androidx.annotation.RequiresApi
 import java.util.*
 import kotlin.random.Random.Default.nextInt
 
 object Converter {
     fun getImageUrl(iconCode:String):String{
-     return Constants.IMG_URL + "${iconCode}@4x.png"
+     return Constants.IMG_URL + "${iconCode}.png"
  };
 
 
@@ -27,6 +19,27 @@ object Converter {
         val sdf = SimpleDateFormat("HH:mm")
         return sdf.format(dt)
     }*/
+    fun getTemperature(temp:Int):Int{
+       return when (Setting.temperature) {
+           Setting.Temperature.F -> {
+               temp*(9/5)+32
+           }
+           Setting.Temperature.K -> {
+               temp+273
+           }
+           else -> {
+               temp
+           }
+       }
+    }
+    fun getWindSpeed(w:Int):String{
+       return if(Setting.wSpeed==Setting.WSpeed.MILE_HOUR)
+        {
+            "${(w.toFloat()/1609.344)} Mile/H"
+        }else{
+           "$w M/S"
+        }
+    }
     fun generateRandomNumber():Int{
         return nextInt()
     }
