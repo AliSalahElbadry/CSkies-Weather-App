@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.airbnb.lottie.LottieAnimationView
 import com.app.our.cskies.init_setting.InitSetting
 import com.app.our.cskies.shard_pref.SharedPrefOps
+import com.app.our.cskies.utils.UserStates
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -26,7 +27,7 @@ class ActivitySplash : AppCompatActivity(),SplashCall {
                 delay(3000)
             }.join()
             val initSetting=getSharedPreferences("setting",Context.MODE_PRIVATE)
-            if(!initSetting.contains("location"))
+            if(!initSetting.contains("location")&&UserStates.checkConnectionState(this@ActivitySplash))
             {
                 val initFragment = InitSetting()
                 initFragment.isCancelable = false
@@ -42,7 +43,7 @@ class ActivitySplash : AppCompatActivity(),SplashCall {
     }
 
     override fun showHome() {
-        val intent = Intent(this@ActivitySplash, ActivityMain::class.java)
-        startActivity(intent)
+            val intent = Intent(this@ActivitySplash, ActivityMain::class.java)
+            startActivity(intent)
     }
 }

@@ -12,7 +12,7 @@ import java.util.*
 object LanguageUtils {
     fun get_En_To_Ar_Numbers(number: String): String {
         val arabicNumber = mutableListOf<String>()
-        for (element in number.toString()) {
+        for (element in number) {
             when (element) {
                 '1' -> arabicNumber.add("١")
                 '2' -> arabicNumber.add("٢")
@@ -24,9 +24,7 @@ object LanguageUtils {
                 '8' -> arabicNumber.add("٨")
                 '9' -> arabicNumber.add("٩")
                 '0' ->arabicNumber.add("٠")
-                '.'->arabicNumber.add(".")
-                '-'->arabicNumber.add("-")
-                else -> arabicNumber.add(".")
+                else -> arabicNumber.add("")
             }
         }
         return arabicNumber.toString()

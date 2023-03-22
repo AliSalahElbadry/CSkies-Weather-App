@@ -18,4 +18,13 @@
     <string name="favorites">المفضلة</string>
     <string name="alerts">التنبيهات</string>
     <string name="confirm_location">تأكيد الموقع</string>
+
+    <string name="temperature">درجة الحرارة</string>
+    <string name="m_s">متر/ث</string>
+    <string name="mile_h">ميل/ساعة</string>
+    <string name="wind_speed">سرعة الرياح</string>
+    <string name="fehrienhit">فهرنهايت</string>
+    <string name="celisus">سيليزيوس</string>
+    <string name="kelven">كيلفن</string>
+    <string name="apply_changes">اضف التغيرات</string>
 </resources>

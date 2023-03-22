@@ -19,7 +19,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 
-class DaysAdapter (var daily:List<DayWeather>,val container:NumloadedImages) : RecyclerView.Adapter<DaysAdapter.MyHolder>() {
+class DaysAdapter (var daily:List<DayWeather>) : RecyclerView.Adapter<DaysAdapter.MyHolder>() {
     private lateinit var binding:DayItemBinding
     class MyHolder(var binding: DayItemBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -38,32 +38,14 @@ class DaysAdapter (var daily:List<DayWeather>,val container:NumloadedImages) : R
         holder.binding.textViewDescriptionDayItem.text=daily[position].description
         //converter
         holder.binding.textViewNameDayItem.text=daily[position].day
-        holder.binding.textViewTempretureDayItem.text="${Converter.getTemperature(daily[position].minTemp)}/" +
-                                                      "${Converter.getTemperature(daily[position].maxTemp)} ${Setting.getTemp()}"
-        if(container.getMyMode()==0) {
-            if(daily[holder.adapterPosition].getImageBitmap()==null) {
-                Glide.with(holder.itemView.context)
-                    .asBitmap()
-                    .load(daily[position].icon)
-                    .into(object : CustomTarget<Bitmap>() {
-                        override fun onResourceReady(
-                            resource: Bitmap,
-                            transition: Transition<in Bitmap>?
-                        ) {
-                            container.setNumLoadedImages(1)
-                            daily[holder.adapterPosition].setImageBitmap(resource)
-                            holder.binding.imageViewDayWeatherIcon.setImageBitmap(resource)
-                        }
-                        override fun onLoadCleared(placeholder: Drawable?) {
-                        }
-                    })
-            }else{
-                holder.binding.imageViewDayWeatherIcon.setImageBitmap(daily[position].getImageBitmap())
-            }
-        }
-        else if (container.getMyMode()==1||container.getMyMode()==2)
-        {
+        holder.binding.textViewTempretureDayItem.text=
+             if(Setting.getLang()=="en") {
+                 "${Converter.getTemperature(daily[position].minTemp)}/" +
+                         "${Converter.getTemperature(daily[position].maxTemp)}${Constants.DEGREE_CHAR}${Setting.getTemp()}"
+             }else{
+                 "${LanguageUtils.get_En_To_Ar_Numbers(Converter.getTemperature(daily[position].minTemp).toString())}/" +
+                         "${LanguageUtils.get_En_To_Ar_Numbers(Converter.getTemperature(daily[position].maxTemp).toString())}${Constants.DEGREE_CHAR}${Setting.getTemp()}"
+             }
             holder.binding.imageViewDayWeatherIcon.setImageBitmap(daily[position].getImageBitmap())
-        }
     }
 }

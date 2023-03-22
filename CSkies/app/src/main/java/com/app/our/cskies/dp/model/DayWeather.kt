@@ -4,29 +4,21 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.io.ByteArrayOutputStream
 
-@Entity(tableName = "DayWeather")
+@Entity(tableName = "DayWeather",primaryKeys=["day","address"])
 data class DayWeather(
     val day:String,
-    val address:String,
+    var address:String,
     val maxTemp:Int,
     val minTemp:Int,
     val description:String,
     val icon:String
 
 ){
-    @ColumnInfo(name = "dayId")
-    @PrimaryKey(autoGenerate = true)
-    private var dayId:Int=0
-    fun getDayId():Int{
-        return dayId
-    }
-    fun setDayId(id:Int)
-    {
-        dayId=id
-    }
+
     @ColumnInfo(name = "image", typeAffinity = ColumnInfo.BLOB)
     private var image: ByteArray?=null
     fun getImageBitmap(): Bitmap? {

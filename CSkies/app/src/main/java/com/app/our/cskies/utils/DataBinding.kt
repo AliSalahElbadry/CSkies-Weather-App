@@ -13,12 +13,15 @@ import com.bumptech.glide.request.target.CustomTarget
 object DataBinding {
 
     fun getIconFromUrl(context: Context,view:ImageView,url:String){
-        val options = RequestOptions()
-            .placeholder(R.drawable.cc)
-        Glide.with(context)
-            .applyDefaultRequestOptions(options)
+            Glide.with(context)
             .asBitmap()
-            .load(url)
-            .into(view)
+            .load(url).into(object : CustomTarget<Bitmap>(){
+                override fun onResourceReady(resource: Bitmap, transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?) {
+
+                }
+                override fun onLoadCleared(placeholder: Drawable?) {
+
+                }
+            })
     }
 }

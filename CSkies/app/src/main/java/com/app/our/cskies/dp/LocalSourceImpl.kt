@@ -1,12 +1,14 @@
 package com.app.our.cskies.dp
 
 import android.content.Context
+import android.util.Log
 import com.app.our.cskies.dp.model.Alert
 import com.app.our.cskies.dp.model.DayWeather
 import com.app.our.cskies.dp.model.HourWeather
 import com.app.our.cskies.dp.model.Location
 import com.app.our.cskies.model.LocationData
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 
 class LocalSourceImpl private constructor(context: Context) :LocalDataSource {
@@ -27,9 +29,12 @@ class LocalSourceImpl private constructor(context: Context) :LocalDataSource {
     override suspend fun insertLocation(location: LocationData) {
                 locationOps.insertLocation(location.location)
                 location.days.forEach {
+                    it.address=location.location.address
+                    Log.e("",it.address)
                     locationOps.insertDay(it)
                 }
                 location.hours.forEach {
+                    it.address=location.location.address
                     locationOps.insertHour(it)
                 }
     }
@@ -37,46 +42,33 @@ class LocalSourceImpl private constructor(context: Context) :LocalDataSource {
         locationOps.insertAlert(alert)
     }
 
-    override suspend fun deleteLocation(location: LocationData) {
-        locationOps.deleteLocation(location.location.address)
-        location.days.forEach {
-            locationOps.deleteDay(it.getDayId(),location.location.address)
-        }
-        location.hours.forEach {
-            locationOps.deleteHour(it.getId(),location.location.address)
-        }
+    override suspend fun deleteLocation(location: Location) {
+            locationOps.deleteLocation(location.address)
+            locationOps.deleteDay(location.address)
+            locationOps.deleteHour(location.address)
     }
 
     override suspend fun deleteAlert(id: Int) {
         locationOps.deleteAlert(id)
     }
 
-    override suspend fun getListOfFavLocations(fav: Boolean): Flow<List<Location>> {
-      return flow{emit(locationOps.getListOfFavLocations(fav))}
+    override  fun getListOfFavLocations(fav: Boolean): Flow<List<Location>> {
+      return locationOps.getListOfFavLocations(fav)
     }
 
-    override suspend fun selectDaysOfLocation(address: String): Flow<List<DayWeather>> {
-        return flow{
-            emit(locationOps.selectDaysOfLocation(address))
-        }
+    override  fun selectDaysOfLocation(address: String): Flow<List<DayWeather>> {
+        return locationOps.selectDaysOfLocation(address)
     }
 
-    override suspend fun selectHoursInLocation(address: String): Flow<List<HourWeather>> {
-        return flow{
-            emit(locationOps.selectHoursInLocation(address))
-        }
+    override  fun selectHoursInLocation(address: String): Flow<List<HourWeather>> {
+        return locationOps.selectHoursInLocation(address)
     }
 
-    override suspend fun getCurrentLocation(isCurrent: Boolean): Flow<Location> {
-        return flow{
-            emit(locationOps.getCurrentLocation(true))
-        }
+    override  fun getCurrentLocation(isCurrent: Boolean): Flow<Location> {
+        return locationOps.getCurrentLocation(true)
     }
 
-    override suspend fun getListOfAlerts(): Flow<List<Alert>>{
-        return flow{
-            emit(locationOps.getListOfAlerts())
-        }
+    override  fun getListOfAlerts(): Flow<List<Alert>>{
+        return locationOps.getListOfAlerts()
     }
-
 }

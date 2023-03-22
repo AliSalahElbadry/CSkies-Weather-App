@@ -36,4 +36,14 @@ object Setting{
                'C'
            }
    }
+
+    fun getWSpeed(): String {
+        var res=""
+        res = if(getLang()=="en") {
+            if(wSpeed==WSpeed.MILE_HOUR)" Mile/H" else "M/S"
+        }else{
+            if(wSpeed==WSpeed.MILE_HOUR)" ميل/ساعة" else "متر/ث"
+        }
+        return res
+    }
 }

@@ -7,6 +7,7 @@ import com.app.our.cskies.dp.model.HourWeather
 import com.app.our.cskies.dp.model.Location
 import com.app.our.cskies.model.LocationData
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 
 interface LocalDataSource {
 
@@ -14,16 +15,16 @@ interface LocalDataSource {
     suspend fun insertAlert(alert: Alert)
 
     //delete
-    suspend fun deleteLocation(location: LocationData)
+    suspend fun deleteLocation(location: Location)
     suspend fun deleteAlert(id:Int)
 
     //select
-    suspend fun getListOfFavLocations(fav:Boolean): Flow<List<Location>>
+     fun getListOfFavLocations(fav:Boolean): Flow<List<Location>>
 
-    suspend fun selectDaysOfLocation(address: String):Flow<List<DayWeather>>
+     fun selectDaysOfLocation(address: String):Flow<List<DayWeather>>
 
-    suspend fun selectHoursInLocation(address:String):Flow<List<HourWeather>>
+     fun selectHoursInLocation(address:String):Flow<List<HourWeather>>
 
-    suspend fun getCurrentLocation(isCurrent:Boolean):Flow<Location>
-    suspend fun getListOfAlerts(): Flow<List<Alert>>
+     fun getCurrentLocation(isCurrent:Boolean): Flow<Location>
+     fun getListOfAlerts(): Flow<List<Alert>>
 }

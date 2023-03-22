@@ -32,6 +32,7 @@ class ActivityMain : AppCompatActivity() {
         setupWithNavController(binding.navLayout, navController = con)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
         when (item.itemId) {
             android.R.id.home -> {
                 if (binding.mdrow.isDrawerOpen(GravityCompat.START)) {

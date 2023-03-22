@@ -1,34 +1,23 @@
 package com.app.our.cskies.weather_data_show.viewmodel
 
-import android.app.Application
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
-import android.util.Log
-import androidx.core.content.ContentProviderCompat.requireContext
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.test.core.app.ApplicationProvider
-import com.app.our.cskies.Repository.FactoryTransformer
 import com.app.our.cskies.Repository.Repository
 import com.app.our.cskies.model.LocationData
-import com.app.our.cskies.network.model.WeatherLocationData
 import com.app.our.cskies.utils.Setting
 import com.app.our.cskies.utils.UserCurrentLocation
 import com.app.our.cskies.network.ApiState
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.google.android.gms.common.api.Api
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class LocationDataViewModel(val repoClass: Repository):ViewModel() {
+class LocationDataViewModel(private val repoClass: Repository):ViewModel() {
 
    private var _liveData=MutableLiveData<ApiState>()
     val liveData: LiveData<ApiState> = _liveData
-    fun getAllFromNetwork() {
-
+    fun getAllFromNetwork(context:Context,isCurrent:Boolean,isFavorite:Boolean) {
         val lat= UserCurrentLocation.latitude?:""
         val lon= UserCurrentLocation.longitude?:""
         if(lat.isNotEmpty()&&lon.isNotEmpty()) {
@@ -37,7 +26,16 @@ class LocationDataViewModel(val repoClass: Repository):ViewModel() {
                 repoClass.getWeatherData(lat, lon, lang = lang).collect {
                     when(it) {
                        is ApiState.Success->  {
-                        _liveData.postValue(ApiState.TransformedState(FactoryTransformer().mapWeatherNetworkToWeatherApp(it.locationData)))
+                       val factory= FactoryTransformer(context)
+                           factory.mapWeatherNetworkToWeatherApp(it.locationData,isCurrent,isFavorite)
+                           factory.stateFlow.collect{num->
+                               if(num==33)
+                               {
+                                   val data=factory.getLocationData()
+                                   _liveData.postValue(ApiState.TransformedState(data))
+                                   insertLocation(data)
+                               }
+                           }
                       }
                       is ApiState.Failure-> {
                           _liveData.postValue(it)
@@ -53,6 +51,20 @@ class LocationDataViewModel(val repoClass: Repository):ViewModel() {
     fun insertLocation(data: LocationData) {
         viewModelScope.launch(Dispatchers.IO) {
             repoClass.insertLocation(data)
+        }
+    }
+    fun getCurrentLocation() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repoClass.getCurrentLocation(true).collect{
+                var locationData=LocationData(it, listOf(), listOf())
+                repoClass.selectHoursInLocation(it.address).collect{hours->
+                    locationData.hours=hours
+                    repoClass.selectDaysOfLocation(it.address).collect{days->
+                        locationData.days=days
+                        _liveData.postValue(ApiState.TransformedState(locationData))
+                    }
+                }
+            }
         }
     }
 }

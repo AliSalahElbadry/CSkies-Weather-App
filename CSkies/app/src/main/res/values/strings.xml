@@ -21,8 +21,9 @@
     <string name="m_s">M/S</string>
     <string name="mile_h">Mile/H</string>
     <string name="wind_speed">Wind Speed</string>
-    <string name="fehrienhit">Fehrienhit</string>
-    <string name="celisus">Celisus</string>
-    <string name="kelven">Kelven</string>
+    <string name="fehrienhit">Fahrenheit</string>
+    <string name="celisus">Celsius</string>
+    <string name="kelven">Kelvin</string>
     <string name="apply_changes">Apply Changes</string>
+    <string name="loading">Loading...</string>
 </resources>

@@ -4,6 +4,7 @@ import androidx.room.*
 import com.app.our.cskies.dp.model.*
 import com.app.our.cskies.model.LocationData
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 
 @Dao
 interface LocationDAO {
@@ -18,7 +19,6 @@ interface LocationDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertHour(hourWeather: HourWeather)
 
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAlert(alert: Alert)
 
@@ -26,11 +26,11 @@ interface LocationDAO {
     @Query("DELETE FROM Location WHERE address = :address")
     suspend fun deleteLocation(address:String)
 
-    @Query("DELETE FROM DayWeather WHERE dayId = :dayId and address = :address")
-    suspend fun deleteDay(dayId: Int,address: String)
+    @Query("DELETE FROM DayWeather  WHERE  address = :address")
+    suspend fun deleteDay(address: String)
 
-    @Query("DELETE FROM HourWeather WHERE id = :hourId And address like :address" )
-    suspend fun deleteHour(hourId:Int,address: String)
+    @Query("DELETE FROM HourWeather WHERE  address = :address" )
+    suspend fun deleteHour(address: String)
 
     @Query("DELETE FROM Alert WHERE id = :id")
     suspend fun deleteAlert(id:Int)
@@ -38,17 +38,17 @@ interface LocationDAO {
 
     //select
     @Query("select * from Location where isFavorite like :fav")
-    suspend fun getListOfFavLocations(fav:Boolean):List<Location>
+     fun getListOfFavLocations(fav:Boolean):Flow<List<Location>>
 
     @Query("select * from DayWeather where address like :address")
-    suspend fun selectDaysOfLocation(address: String):List<DayWeather>
+     fun selectDaysOfLocation(address: String):Flow<List<DayWeather>>
 
     @Query("select * from HourWeather where  address like :address")
-    suspend fun selectHoursInLocation(address:String): List<HourWeather>
+     fun selectHoursInLocation(address:String): Flow<List<HourWeather>>
     @Query("select * from Location where isCurrent like :isCurrent")
-    suspend fun getCurrentLocation(isCurrent:Boolean):Location
+    fun getCurrentLocation(isCurrent:Boolean):Flow<Location>
 
     @Query("select * from Alert")
-    suspend fun getListOfAlerts():List<Alert>
+    fun getListOfAlerts():Flow<List<Alert>>
 
 }

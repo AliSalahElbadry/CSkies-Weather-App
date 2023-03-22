@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.our.cskies.databinding.HourItemBinding
 import com.app.our.cskies.dp.model.HourWeather
+import com.app.our.cskies.utils.Constants
 import com.app.our.cskies.utils.Converter
 import com.app.our.cskies.utils.LanguageUtils
 import com.app.our.cskies.utils.Setting
@@ -20,7 +21,7 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 
 
-class HoursAdapter(var hours:List<HourWeather>,val container:NumloadedImages) : RecyclerView.Adapter<HoursAdapter.MyHolder>() {
+class HoursAdapter(var hours:List<HourWeather>) : RecyclerView.Adapter<HoursAdapter.MyHolder>() {
 
     lateinit var binding:HourItemBinding
     class MyHolder(var binding:HourItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -38,31 +39,12 @@ class HoursAdapter(var hours:List<HourWeather>,val container:NumloadedImages) : 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
         holder.binding.textViewHourItemHour.text=hours[position].hour
         //converter
-        holder.binding.textViewTempHourItem.text=Converter.getTemperature(hours[position].temp).toString()+" "+Setting.getTemp()
-       if(container.getMyMode()==0) {
-           if(hours[holder.adapterPosition].getImageBitmap()==null) {
-               Glide.with(holder.itemView.context)
-                   .asBitmap()
-                   .load(hours[position].icon)
-                   .into(object : CustomTarget<Bitmap>() {
-                       override fun onResourceReady(
-                           resource: Bitmap,
-                           transition: Transition<in Bitmap>?
-                       ) {
-                           container.setNumLoadedImages(1)
-                           hours[holder.adapterPosition].setImageBitmap(resource)
-                           holder.binding.imageViewIconHourItemHour.setImageBitmap(resource)
-                       }
+         holder.binding.textViewTempHourItem.text=
+            if(Setting.getLang()=="ar")
+            "${LanguageUtils.get_En_To_Ar_Numbers(Converter.getTemperature(hours[position].temp).toString())}${Constants.DEGREE_CHAR}${Setting.getTemp()}"
+        else
+            "${Converter.getTemperature(hours[position].temp)}${Constants.DEGREE_CHAR}${Setting.getTemp()}"
 
-                       override fun onLoadCleared(placeholder: Drawable?) {
-
-                       }
-                   })
-           }else{
-               holder.binding.imageViewIconHourItemHour.setImageBitmap(hours[holder.adapterPosition].getImageBitmap())
-           }
-       }else{
-           holder.binding.imageViewIconHourItemHour.setImageBitmap(hours[holder.adapterPosition].getImageBitmap())
-       }
+         holder.binding.imageViewIconHourItemHour.setImageBitmap(hours[holder.adapterPosition].getImageBitmap())
     }
 }

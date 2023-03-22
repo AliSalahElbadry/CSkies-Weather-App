@@ -11,6 +11,7 @@ import com.app.our.cskies.model.LocationData
 import com.app.our.cskies.network.ApiState
 import com.app.our.cskies.network.RemoteSourceImpl
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 
 
 class Repository private constructor(context: Context): RepositoryInterface {
@@ -34,7 +35,7 @@ class Repository private constructor(context: Context): RepositoryInterface {
       localDataSource.insertAlert(alert)
     }
 
-    override suspend fun deleteLocation(location: LocationData) {
+    override suspend fun deleteLocation(location: Location) {
         localDataSource.deleteLocation(location)
     }
 
@@ -42,23 +43,23 @@ class Repository private constructor(context: Context): RepositoryInterface {
         localDataSource.deleteAlert(id)
     }
 
-    override suspend fun getListOfFavLocations(fav: Boolean): Flow<List<Location>> {
+    override  fun getListOfFavLocations(fav: Boolean): Flow<List<Location>> {
        return localDataSource.getListOfFavLocations(true)
     }
 
-    override suspend fun selectDaysOfLocation(address: String): Flow<List<DayWeather>> {
+    override  fun selectDaysOfLocation(address: String): Flow<List<DayWeather>> {
        return localDataSource.selectDaysOfLocation(address)
     }
 
-    override suspend fun selectHoursInLocation(address: String): Flow<List<HourWeather>> {
+    override  fun selectHoursInLocation(address: String): Flow<List<HourWeather>> {
       return localDataSource.selectHoursInLocation(address)
     }
 
-    override suspend fun getCurrentLocation(isCurrent: Boolean): Flow<Location> {
+    override  fun getCurrentLocation(isCurrent: Boolean): Flow<Location> {
        return localDataSource.getCurrentLocation(true)
     }
 
-    override suspend fun getListOfAlerts(): Flow<List<Alert>> {
+    override  fun getListOfAlerts(): Flow<List<Alert>> {
       return localDataSource.getListOfAlerts()
     }
 

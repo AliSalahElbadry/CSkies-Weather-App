@@ -23,6 +23,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.app.our.cskies.R
 import com.app.our.cskies.SplashCall
+import com.app.our.cskies.favorites.view.FragmentFavoritesPage
 import com.app.our.cskies.utils.Dialogs
 import com.app.our.cskies.utils.Setting
 import com.app.our.cskies.utils.UserCurrentLocation
@@ -49,6 +50,7 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener  {
     private lateinit var mMapView: MapView
     var mode:Int=if(Setting.location== Setting.Location.GPS)0 else 1
     lateinit var progress: ProgressDialog
+    var isFavorite:Boolean=false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -63,12 +65,21 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener  {
             btnDoneMap.setOnClickListener{
                 if(pinSelected)
                 {
-                    val pref=SharedPrefOps(requireContext().applicationContext)
-                    pref.insertInData()
-                    pref.saveLastLocation()
-                    (requireActivity() as SplashCall).showHome()
-                    mMapView.onDestroy()
-                    dismiss()
+                    if(!isFavorite) {
+                        val pref = SharedPrefOps(requireContext().applicationContext)
+                        pref.insertInData()
+                        pref.saveLastLocation()
+                        (requireActivity() as SplashCall).showHome()
+                        mMapView.onDestroy()
+                        dismiss()
+                    }else{
+                        var fragmentShowFavoritesPage = FragmentFavoritesPage()
+                        fragmentShowFavoritesPage.isNew=true
+                        activity!!.supportFragmentManager.beginTransaction()
+                            .replace(R.id.my_host_fragment, fragmentShowFavoritesPage, null)
+                            .addToBackStack(null)
+                            .commit()
+                    }
                 }else{
                     Dialogs.SnakeToast(it,"Please Select Location First")
                 }
@@ -147,7 +158,7 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener  {
             fusedLocationProviderClient.removeLocationUpdates(this)
             progress.dismiss()
             (requireActivity() as SplashCall).showHome()
-            dismiss()
+
         }
     }
 
@@ -203,8 +214,14 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener  {
              mGoogleMap.setOnMapLongClickListener{
                  val latitude=it?.latitude
                  val longitude=it?.longitude
-                 UserCurrentLocation.latitude=latitude.toString()
-                 UserCurrentLocation.longitude=longitude.toString()
+                 if(!isFavorite) {
+                     UserCurrentLocation.latitude = latitude.toString()
+                     UserCurrentLocation.longitude = longitude.toString()
+                 }else
+                 {
+                     UserCurrentLocation.favoriteLat = latitude.toString()
+                     UserCurrentLocation.favoriteLon = longitude.toString()
+                 }
                  pinSelected=true
                  mGoogleMap.clear()
                  mGoogleMap.addMarker(MarkerOptions().position(it))

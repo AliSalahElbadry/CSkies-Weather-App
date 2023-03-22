@@ -43,7 +43,7 @@ class InitSetting : DialogFragment() {
                    Setting.notificationState= Setting.NotificationState.OFF
                }
                val locationFragment = FragmentLocationDetector()
-               locationFragment.isCancelable = true
+               locationFragment.isCancelable = false
                val manager = requireActivity().supportFragmentManager
                locationFragment.show(manager,null)
                dismiss()
