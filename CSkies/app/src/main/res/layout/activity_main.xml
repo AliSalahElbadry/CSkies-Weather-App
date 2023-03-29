@@ -1,43 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drower_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.view.ActivityMain">
-    <androidx.drawerlayout.widget.DrawerLayout
-        android:id="@+id/mdrow"
+    android:theme="@style/Theme.AppCompat.NoActionBar">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:context=".ActivityHome">
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/myToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/toolbar_back">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="#FFC107"
+                android:textSize="24sp"
+                android:textStyle="bold|italic" />
+        </androidx.appcompat.widget.Toolbar>
 
         <fragment
             android:id="@+id/my_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:defaultNavHost="true"
             app:navGraph="@navigation/drower_graph" />
 
-        <com.google.android.material.navigation.NavigationView
-            android:id="@+id/nav_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:background="#9C27B0"
-            app:headerLayout="@layout/header_drower_layout"
-            app:itemBackground="@drawable/menu_item_back"
-            app:itemIconTint="@android:color/holo_blue_bright"
-            app:itemRippleColor="#9C27B0"
-            app:itemShapeFillColor="@color/purple_200"
-            app:itemTextColor="#FFFFFF"
-            app:menu="@menu/main_menu"
-            tools:ignore="VisualLintBounds" />
-    </androidx.drawerlayout.widget.DrawerLayout>
+    </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigator"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="#9C27B0"
+        app:headerLayout="@layout/header_drower_layout"
+        app:itemBackground="@drawable/menu_item_back"
+        app:itemIconTint="@android:color/holo_blue_bright"
+        app:itemRippleColor="#9C27B0"
+        app:itemShapeFillColor="@color/purple_200"
+        app:itemTextColor="#FFFFFF"
+        app:menu="@menu/main_menu"
+        tools:ignore="VisualLintBounds" />
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -109,6 +109,7 @@ class FragmentShowLocationData : Fragment() {
 
         binding.textViewCity.text=data.location.address
         binding.textViewDayTime.text=data.location.date
+        binding.imageViewWeatherIcon.setImageBitmap(data.location.getImageBitmap())
         binding.textViewCityTempreture.text="${Converter.getTemperature(data.location.temp)}${Constants.DEGREE_CHAR}${Setting.getTemp()}"
         binding.textViewClouds.text=data.location.clouds.toString()
         binding.textViewWindSpeed.text=Converter.getWindSpeed(data.location.windSpeed)
@@ -120,9 +121,7 @@ class FragmentShowLocationData : Fragment() {
         hoursAdapter.notifyDataSetChanged()
         daysAdapter.notifyDataSetChanged()
     }
-    fun getLocationDataFromDataBase(){
 
-    }
 
     @SuppressLint("SetTextI18n")
     private fun showData()
