@@ -71,4 +71,12 @@ class LocalSourceImpl private constructor(context: Context) :LocalDataSource {
     override  fun getListOfAlerts(): Flow<List<Alert>>{
         return locationOps.getListOfAlerts()
     }
+
+    override suspend fun getAlert(address: String, type: Int): Alert {
+       return locationOps.getAlert(address,type)
+    }
+
+    override suspend fun updateAlert(alert: Alert) {
+        locationOps.updateAlert(alert.numOfDays,alert.getId()!!)
+    }
 }

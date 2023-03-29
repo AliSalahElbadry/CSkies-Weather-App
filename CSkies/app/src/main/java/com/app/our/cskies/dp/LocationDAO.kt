@@ -51,4 +51,9 @@ interface LocationDAO {
     @Query("select * from Alert")
     fun getListOfAlerts():Flow<List<Alert>>
 
+    @Query("select * from Alert where id in (select id from Alert where address like:address and type like:type)")
+    suspend fun getAlert(address: String,type:Int):Alert
+
+    @Query("update Alert set numOfDays =:num where id =:id")
+    suspend fun updateAlert(num:Int,id:Int)
 }

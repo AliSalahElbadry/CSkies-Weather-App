@@ -9,7 +9,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#4C4444">
+        android:accessibilityLiveRegion="none"
+        android:background="@android:color/transparent"
+        android:scrollbarThumbHorizontal="@color/transparent"
+        android:scrollbarThumbVertical="@color/transparent"
+        android:scrollbarTrackHorizontal="@color/transparent"
+        android:scrollbarTrackVertical="@color/transparent">
 
         <ImageView
             android:id="@+id/imageView"
@@ -25,28 +30,32 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#A1100E0E"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
-            android:layout_width="93dp"
-            android:layout_height="84dp"
-            android:layout_margin="16dp"
-            android:layout_marginBottom="16dp"
-            app:backgroundTint="#000DFF18"
-            app:icon="@drawable/pin_location_add"
-            app:iconSize="64dp"
-            app:iconTint="#2EF442"
+            android:layout_width="69dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="40dp"
+            android:alpha="1"
+            android:clickable="true"
+            android:contentDescription="@string/add_new_location"
+            android:focusable="true"
+            android:src="@drawable/pin_location_add"
+            app:tint="#00F619"
+            app:backgroundTint="#000AFA0A"
+            app:elevation="0dp"
+            app:fabSize="auto"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.954"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView"
-            app:layout_constraintVertical_bias="0.762" />
+            app:layout_constraintVertical_bias="0.815"
+            app:maxImageSize="56dp"
+
+            app:rippleColor="#40FF32" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

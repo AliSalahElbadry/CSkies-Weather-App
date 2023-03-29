@@ -6,7 +6,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -17,7 +20,7 @@
         android:theme="@style/Theme.CSkies"
         tools:targetApi="31">
         <activity
-            android:name=".ActivityMain"
+            android:name=".home.view.ActivityMain"
             android:exported="false" />
 
         <meta-data
@@ -27,14 +30,14 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         <activity
-            android:name=".ActivitySplash"
+            android:name=".splash.ActivitySplash"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver android:name=".alerts.alart_back_workers.AlertReceiver"/>
     </application>
 
 </manifest>

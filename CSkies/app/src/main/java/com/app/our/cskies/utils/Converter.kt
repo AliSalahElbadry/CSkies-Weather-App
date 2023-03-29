@@ -1,5 +1,9 @@
 package com.app.our.cskies.utils
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.annotation.RequiresApi
 import java.util.*
@@ -45,16 +49,7 @@ object Converter {
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
-   /* fun canelAlarm(context: Context, alert:String?, requestCode:Int)
-    {
-        var alarmMgr: AlarmManager? = null 
-        lateinit var alarmIntent: PendingIntent
-        alarmMgr = context.applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmIntent = Intent(context.applicationContext, AlarmReciver::class.java).putExtra(
-            Constants.Alert,alert).let {
-                intent -> PendingIntent.getBroadcast(context.applicationContext, requestCode, intent, PendingIntent.FLAG_IMMUTABLE )
-            } alarmMgr?.cancel(alarmIntent)
-    }*/
+
     fun isDaily(startTime: Long,endTime:Long):Boolean{
         return endTime-startTime >= 86400000
     }

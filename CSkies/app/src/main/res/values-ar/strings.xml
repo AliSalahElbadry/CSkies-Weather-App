@@ -18,7 +18,6 @@
     <string name="favorites">المفضلة</string>
     <string name="alerts">التنبيهات</string>
     <string name="confirm_location">تأكيد الموقع</string>
-
     <string name="temperature">درجة الحرارة</string>
     <string name="m_s">متر/ث</string>
     <string name="mile_h">ميل/ساعة</string>
@@ -27,4 +26,17 @@
     <string name="celisus">سيليزيوس</string>
     <string name="kelven">كيلفن</string>
     <string name="apply_changes">اضف التغيرات</string>
+    <string name="loading">يتم التحميل …</string>
+    <string name="alert_by">تنبيهي ب</string>
+    <string name="humidity">الرطوبة</string>
+    <string name="visability">الرؤية</string>
+    <string name="pressure">الضغط</string>
+    <string name="alarm">منبه</string>
+    <string name="add">اضف</string>
+    <string name="from">من</string>
+    <string name="to">الي</string>
+    <string name="close">إغلق</string>
+    <string name="weather_alarm">تنبيه الطقس</string>
+
+    <string name="add_new_location">موقع جديد</string>
 </resources>

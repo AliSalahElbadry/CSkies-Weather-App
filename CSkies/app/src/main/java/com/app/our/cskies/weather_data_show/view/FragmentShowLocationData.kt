@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.app.our.cskies.R
 import com.app.our.cskies.Repository.Repository
 import com.app.our.cskies.databinding.FragmentShowLocationDataBinding
 import com.app.our.cskies.model.LocationData
@@ -49,27 +50,36 @@ class FragmentShowLocationData : Fragment() {
                 this.orientation = LinearLayoutManager.HORIZONTAL
             }
         binding.pullToRefresh.setOnRefreshListener {
-            binding.textViewDayTime.text=TimeUtils.getCurrentDate()+" "+TimeUtils.getCurrentTime()
-            binding.pullToRefresh.isRefreshing = false
+            if(UserStates.checkConnectionState(requireActivity()))
+            locationDataViewModel.getAllFromNetwork(requireContext(),true, isFavorite = false)
+            else{
+                locationDataViewModel.getCurrentLocation()
+            }
         }
         binding.recyclerViewdayHoursData.adapter = hoursAdapter
         binding.recyclerViewDaysInWeekData.layoutManager = LinearLayoutManager(view.context)
         binding.recyclerViewDaysInWeekData.adapter = daysAdapter
         when (mode) {
             0 -> {
+                requireActivity().title=resources.getString(R.string.home)
                 if(UserStates.checkConnectionState(requireActivity())) {
-                    locationDataViewModel.getAllFromNetwork(
-                        this.context!!,
-                        isCurrentLocation,
-                        isFavoriteLocation
-                    )
+                    try {
+                        locationDataViewModel.getAllFromNetwork(
+                            this.context!!,
+                            isCurrentLocation,
+                            isFavoriteLocation
+                        )
+                    }catch (e:Exception){
+                        Dialogs.SnakeToast(binding.root,if(Setting.getLang()=="en")"Network Error" else "مشكلة في الاتصال ")
+                        Log.e("","Network Error")
+                    }
                 }else{
-                   // Dialogs.SnakeToast(this.requireView(),"Please Check Your Connection !!")
                     locationDataViewModel.getCurrentLocation()
                 }
                     locationDataViewModel.liveData.observe(this) {
                         when (it) {
                             is ApiState.TransformedState -> {
+                                binding.pullToRefresh.isRefreshing = false
                                 data = it.locationData
                                 hoursAdapter.hours = data.hours
                                 daysAdapter.daily = data.days
@@ -78,6 +88,7 @@ class FragmentShowLocationData : Fragment() {
                                 showData()
                             }
                             is ApiState.Failure -> {
+
                                 Dialogs.SnakeToast(binding.root, it.message)
                             }
                             else -> {

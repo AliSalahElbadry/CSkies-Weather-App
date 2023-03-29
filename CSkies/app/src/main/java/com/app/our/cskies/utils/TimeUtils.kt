@@ -37,6 +37,7 @@ object TimeUtils {
         val sdf = SimpleDateFormat("hh aa",Locale(Setting.getLang()))
         return sdf.format(date)
     }
+
     fun getCurrentDate(): String {
             val currentTime = Calendar.getInstance().time
             val sdf = SimpleDateFormat("dd-MM-yyyy", Locale(Setting.getLang()))

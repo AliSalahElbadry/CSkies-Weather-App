@@ -82,4 +82,12 @@ class SharedPrefOps( context: Context) {
        UserCurrentLocation.latitude=sharedPreferences.getString("locationLat",null)
         UserCurrentLocation.longitude=sharedPreferences.getString("locationLon",null)
     }
+    fun isNewSettingRestart():Int{
+       return  sharedPreferences.getInt("isNewSetting",-1)
+    }
+    fun saveAsNewSetting(num:Int){
+        val editor= sharedPreferences.edit()
+        editor.putInt("isNewSetting", num)
+        editor.apply()
+    }
 }

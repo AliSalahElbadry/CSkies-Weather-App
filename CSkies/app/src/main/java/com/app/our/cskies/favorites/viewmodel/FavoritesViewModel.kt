@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.our.cskies.Repository.Repository
 import com.app.our.cskies.dp.model.Location
+import com.app.our.cskies.home.viewModel.ViewModelHome
 import com.app.our.cskies.model.LocationData
 import com.app.our.cskies.network.ApiState
 import com.app.our.cskies.utils.Setting
@@ -42,7 +43,7 @@ class FavoritesViewModel(private val repoClass:Repository):ViewModel() {
     fun getLocationData(location: Location) {
         viewModelScope.launch(Dispatchers.IO)
         {
-            var locationD=LocationData(location, listOf(), listOf())
+               val locationD=LocationData(location, listOf(), listOf())
                 repoClass.selectHoursInLocation(location.address).collect {
                     locationD.hours = it
                     repoClass.selectDaysOfLocation(location.address).collect{days->
@@ -97,6 +98,10 @@ class FavoritesViewModel(private val repoClass:Repository):ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             repoClass.insertLocation(data)
         }
+    }
+
+    fun setTitle(i: Int) {
+        ViewModelHome().setTitle(i)
     }
 
 }

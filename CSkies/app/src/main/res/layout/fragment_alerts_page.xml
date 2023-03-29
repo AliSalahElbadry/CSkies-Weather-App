@@ -8,14 +8,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#4C4444">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="277dp"
             android:layout_height="258dp"
-            android:src="@drawable/cc"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -24,31 +22,35 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#A1100E0E" />
-
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_margin="16dp"
-            android:layout_marginBottom="16dp"
-            app:backgroundTint="#000DFF18"
-            app:elevation="12dp"
-            app:icon="@drawable/alert_add"
-            app:iconSize="64dp"
-            app:iconTint="#2FFA32"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.954"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="69dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="44dp"
+            android:alpha="1"
+            android:clickable="true"
+            android:contentDescription="@string/add_new_location"
+            android:focusable="true"
+            android:src="@drawable/alert_add"
+            app:backgroundTint="#000AFA0A"
+            app:elevation="0dp"
+            app:fabSize="auto"
+            app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
+
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView"
-            app:layout_constraintVertical_bias="0.762" />
+            app:layout_constraintVertical_bias="0.738"
+            app:maxImageSize="56dp"
+            app:rippleColor="#40FF32"
+            app:tint="#00F619" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

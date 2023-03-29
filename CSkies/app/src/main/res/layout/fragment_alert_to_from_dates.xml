@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/cat_bcak_item"
+    tools:context=".alerts.view.FragmentAlertToFromDates">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonToDate"
+        android:layout_width="138dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/btn_don_setting_back"
+        android:text="@string/to"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonFromDate"
+        android:layout_width="159dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="52dp"
+        android:background="@drawable/btn_don_setting_back"
+        android:text="@string/from"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonToDate"
+        app:layout_constraintEnd_toStartOf="@+id/buttonToDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/buttonToDate"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textViewDateFrom"
+        android:layout_width="90dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:textAlignment="gravity"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/buttonFromDate"
+        app:layout_constraintStart_toStartOf="@+id/buttonFromDate"
+        app:layout_constraintTop_toBottomOf="@+id/buttonFromDate" />
+
+    <TextView
+        android:id="@+id/textViewDateTo"
+        android:layout_width="90dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:textAlignment="gravity"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/buttonToDate"
+        app:layout_constraintStart_toStartOf="@+id/buttonToDate"
+        app:layout_constraintTop_toBottomOf="@+id/buttonToDate" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupAlertType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/textViewDateTo"
+        app:layout_constraintStart_toStartOf="@+id/textViewDateFrom"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDateFrom">
+
+        <RadioButton
+            android:id="@+id/radioButtonAlarmAlert"
+            style="@style/Widget.Material3.CompoundButton.RadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@android:drawable/btn_radio"
+            android:text="@string/alarm"
+            android:textColor="#5D6FD3"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/radioButtonNotifiAlert"
+            style="@style/Widget.Material3.CompoundButton.RadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:button="@android:drawable/btn_radio"
+            android:text="@string/notification"
+            android:textColor="#5D6FD3"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </RadioGroup>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonAddAlert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/btn_don_setting_back"
+        android:text="@string/add"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupAlertType"
+        app:layout_constraintVertical_bias="0.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>

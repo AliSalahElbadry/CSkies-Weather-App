@@ -5,4 +5,5 @@ object Constants {
     const val apiKey="513ce609192ef6d91a06b0ffb80179b5"
     const val IMG_URL = "https://openweathermap.org/img/w/"
     const val DEGREE_CHAR='°'
+
 }

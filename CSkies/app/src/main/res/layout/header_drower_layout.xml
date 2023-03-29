@@ -7,10 +7,24 @@
     android:elevation="45dp"
     android:layoutDirection="locale">
 
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/burls"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/imageView_drower_icon"
         android:layout_width="300dp"
         android:layout_height="151dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="100dp"
         android:adjustViewBounds="false"
         android:background="#00FFFFFF"
         android:backgroundTint="#00FFFFFF"
@@ -21,6 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_marginBaseline="10dp"
         app:srcCompat="@drawable/cc"
         tools:srcCompat="@drawable/cc" />
 

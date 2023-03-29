@@ -11,11 +11,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.app.our.cskies.LocationGetter.FragmentLocationDetector
+import com.app.our.cskies.R
 import com.app.our.cskies.Repository.Repository
 import com.app.our.cskies.databinding.FragmentFavoritesPageBinding
 import com.app.our.cskies.dp.model.Location
 import com.app.our.cskies.favorites.viewmodel.FavoritesViewModel
+import com.app.our.cskies.home.viewModel.ViewModelHome
 import com.app.our.cskies.utils.Dialogs
+import com.app.our.cskies.utils.Setting
 import com.app.our.cskies.utils.UserStates
 import com.app.our.cskies.weather_data_show.view.FragmentShowLocationData
 import kotlinx.coroutines.launch
@@ -38,6 +41,7 @@ class FragmentFavoritesPage : Fragment(),IOnClickItemListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         favoritesViewModel= FavoritesViewModel(Repository.getInstance(binding.root.context))
+        requireActivity().title = resources.getString(R.string.favorites)
         binding.recyclerView.layoutManager=LinearLayoutManager(this.context)
         binding.recyclerView.adapter=favoritesAdapter
         binding.fab.setOnClickListener{

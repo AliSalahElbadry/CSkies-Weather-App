@@ -5,19 +5,19 @@
     android:layout_width="wrap_content"
     android:layout_height="130dp"
     android:layout_margin="5dp"
+    android:background="@drawable/day_item_background"
+    android:elevation="5dp"
     android:layoutDirection="locale"
-    app:cardBackgroundColor="#2196F3"
+    app:cardBackgroundColor="#DF2196F3"
     app:cardCornerRadius="25dp"
-    app:cardElevation="12dp">
+    app:cardElevation="5dp">
 
     <TextView
         android:id="@+id/textViewHourItemHour"
         android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:gravity="center_horizontal|center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
         android:layoutDirection="locale"
         android:text="1234"
         android:textAlignment="gravity"
@@ -28,19 +28,15 @@
     <ImageView
         android:id="@+id/imageViewIconHourItemHour"
         android:layout_width="45dp"
-        android:layout_height="48dp"
+        android:layout_height="45dp"
         android:layout_gravity="center_horizontal|center_vertical"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
         android:layoutDirection="locale"
         app:srcCompat="@drawable/cc" />
 
     <TextView
         android:id="@+id/textViewTempHourItem"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"

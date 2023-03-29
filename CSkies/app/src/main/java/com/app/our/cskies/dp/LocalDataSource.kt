@@ -27,4 +27,6 @@ interface LocalDataSource {
 
      fun getCurrentLocation(isCurrent:Boolean): Flow<Location>
      fun getListOfAlerts(): Flow<List<Alert>>
+    suspend fun getAlert(address: String,type:Int):Alert
+    suspend fun  updateAlert(alert: Alert)
 }

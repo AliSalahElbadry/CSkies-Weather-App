@@ -1,24 +1,26 @@
-package com.app.our.cskies
+package com.app.our.cskies.home.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI.setupWithNavController
+import com.app.our.cskies.R
 import com.app.our.cskies.databinding.ActivityMainBinding
+import com.app.our.cskies.home.viewModel.ViewModelHome
 import com.app.our.cskies.utils.LanguageUtils
 import com.app.our.cskies.utils.Setting
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.util.*
 
 class ActivityMain : AppCompatActivity() {
     lateinit var binding:ActivityMainBinding
     var index=0
+    lateinit var model:ViewModelHome
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LanguageUtils.setAppLocale(Setting.getLang(),this)
@@ -28,11 +30,11 @@ class ActivityMain : AppCompatActivity() {
         actionBar!!.setHomeAsUpIndicator(R.drawable.baseline_menu_24)
         actionBar.setDisplayShowHomeEnabled(true)
         actionBar.setDisplayHomeAsUpEnabled(true)
+        actionBar.setDisplayShowTitleEnabled(true)
         val con: NavController = Navigation.findNavController(this, R.id.my_host_fragment)
         setupWithNavController(binding.navLayout, navController = con)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
         when (item.itemId) {
             android.R.id.home -> {
                 if (binding.mdrow.isDrawerOpen(GravityCompat.START)) {
@@ -44,7 +46,6 @@ class ActivityMain : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
     override fun onBackPressed() {
 
         if (index == 0) {
@@ -56,5 +57,4 @@ class ActivityMain : AppCompatActivity() {
             }
         } else if (index == 1) finishAffinity()
     }
-
 }

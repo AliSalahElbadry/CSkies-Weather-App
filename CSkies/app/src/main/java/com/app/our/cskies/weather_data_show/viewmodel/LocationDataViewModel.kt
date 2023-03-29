@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.our.cskies.Repository.Repository
+import com.app.our.cskies.home.viewModel.ViewModelHome
 import com.app.our.cskies.model.LocationData
 import com.app.our.cskies.utils.Setting
 import com.app.our.cskies.utils.UserCurrentLocation
@@ -66,5 +67,8 @@ class LocationDataViewModel(private val repoClass: Repository):ViewModel() {
                 }
             }
         }
+    }
+    fun setTitle(i:Int){
+        ViewModelHome().setTitle(i)
     }
 }

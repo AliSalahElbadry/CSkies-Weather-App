@@ -32,7 +32,7 @@
             android:layout_height="126dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            app:cardBackgroundColor="#8F039DCD"
+            app:cardBackgroundColor="#DA1AD1FF"
             app:cardCornerRadius="25dp"
             app:cardElevation="12dp"
             app:layout_constraintBottom_toTopOf="@+id/initSettingDone"
@@ -49,8 +49,10 @@
                 android:background="@drawable/home_back_week_days"
                 android:text="@string/notification"
                 android:textAlignment="center"
+                android:textColor="#FFFFFF"
                 android:textDirection="locale"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textStyle="bold|italic" />
 
             <RadioGroup
                 android:id="@+id/radioGroupNotifInit"
@@ -62,7 +64,7 @@
 
                 <RadioButton
                     android:id="@+id/radioButtonNotifOnInit"
-                    android:layout_width="87dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
                     android:background="@drawable/city_name_back"
@@ -73,7 +75,7 @@
 
                 <RadioButton
                     android:id="@+id/radioButtonNotifOffInit"
-                    android:layout_width="88dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
                     android:background="@drawable/city_name_back"
@@ -92,7 +94,7 @@
             android:layout_gravity="top"
             android:layout_marginTop="22dp"
             android:layout_marginBottom="10dp"
-            app:cardBackgroundColor="#8F039DCD"
+            app:cardBackgroundColor="#DA1AD1FF"
             app:cardCornerRadius="25dp"
             app:cardElevation="12dp"
             app:layout_constraintBottom_toTopOf="@+id/cardView3"
@@ -110,8 +112,10 @@
                 android:background="@drawable/home_back_week_days"
                 android:text="@string/location_method"
                 android:textAlignment="center"
+                android:textColor="#FFFFFF"
                 android:textDirection="locale"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textStyle="bold|italic" />
 
             <RadioGroup
                 android:id="@+id/radioGroupLoactionInit"
@@ -123,7 +127,7 @@
 
                 <RadioButton
                     android:id="@+id/radioButtonMapInit"
-                    android:layout_width="96dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
                     android:background="@drawable/city_name_back"
@@ -134,7 +138,7 @@
 
                 <RadioButton
                     android:id="@+id/radioButtonGpsInit"
-                    android:layout_width="88dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
                     android:background="@drawable/city_name_back"
@@ -148,8 +152,8 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/initSettingDone"
-            android:layout_width="212dp"
-            android:layout_height="67dp"
+            android:layout_width="181dp"
+            android:layout_height="69dp"
             android:layout_gravity="center_horizontal|center_vertical"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="10dp"

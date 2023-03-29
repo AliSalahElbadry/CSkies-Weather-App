@@ -12,7 +12,9 @@
         tools:layout="@layout/fragment_alerts_page" >
         <action
             android:id="@+id/action_fragmentAlertsPage_to_fragmentSettingPage"
-            app:destination="@id/fragmentSettingPage" />
+            app:destination="@id/fragmentSettingPage"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/fragmentFavoritesPage"
@@ -21,7 +23,9 @@
         tools:layout="@layout/fragment_favorites_page" >
         <action
             android:id="@+id/action_fragmentFavoritesPage_to_fragmentAlertsPage"
-            app:destination="@id/fragmentAlertsPage" />
+            app:destination="@id/fragmentAlertsPage"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/fragmentShowLocationData"
@@ -30,7 +34,9 @@
         tools:layout="@layout/fragment_show_location_data" >
         <action
             android:id="@+id/action_fragmentShowLocationData_to_fragmentFavoritesPage2"
-            app:destination="@id/fragmentFavoritesPage" />
+            app:destination="@id/fragmentFavoritesPage"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/fragmentSettingPage"
@@ -39,6 +45,8 @@
         tools:layout="@layout/fragment_setting_page" >
         <action
             android:id="@+id/action_fragmentSettingPage_to_fragmentShowLocationData"
-            app:destination="@id/fragmentShowLocationData" />
+            app:destination="@id/fragmentShowLocationData"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

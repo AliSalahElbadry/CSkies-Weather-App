@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.app.our.cskies.LocationGetter.FragmentLocationDetector
 import com.app.our.cskies.R
+import com.app.our.cskies.alerts.view.FragmentListOfAlerts
 import com.app.our.cskies.databinding.FragmentInitSettingsBinding
 import com.app.our.cskies.utils.Dialogs
 import com.app.our.cskies.utils.Setting
@@ -43,9 +44,8 @@ class InitSetting : DialogFragment() {
                    Setting.notificationState= Setting.NotificationState.OFF
                }
                val locationFragment = FragmentLocationDetector()
-               locationFragment.isCancelable = false
-               val manager = requireActivity().supportFragmentManager
-               locationFragment.show(manager,null)
+               locationFragment.isCancelable=false
+               locationFragment.show(requireActivity().supportFragmentManager,null)
                dismiss()
            }else{
                Dialogs.SnakeToast(it,"Please Select All Required Data")

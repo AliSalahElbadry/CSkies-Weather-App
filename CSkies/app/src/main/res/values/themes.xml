@@ -11,6 +11,10 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
     </style>
+    <style name="ToolbarTitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+    
 </resources>

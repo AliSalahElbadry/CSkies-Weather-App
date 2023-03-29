@@ -12,6 +12,7 @@ import com.app.our.cskies.network.ApiState
 import com.app.our.cskies.network.RemoteSourceImpl
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
 
 
 class Repository private constructor(context: Context): RepositoryInterface {
@@ -24,7 +25,11 @@ class Repository private constructor(context: Context): RepositoryInterface {
         units: String,
         lang: String
     ): Flow<ApiState> {
-       return remoteSource.getWeatherData(latitude,longitude, execlude, units, lang)
+       return try{
+           remoteSource.getWeatherData(latitude,longitude, execlude, units, lang)
+       }catch(e:Exception){
+          flow { emit(ApiState.Failure(e.toString()))}
+       }
     }
 
     override suspend fun insertLocation(location: LocationData) {
@@ -61,6 +66,14 @@ class Repository private constructor(context: Context): RepositoryInterface {
 
     override  fun getListOfAlerts(): Flow<List<Alert>> {
       return localDataSource.getListOfAlerts()
+    }
+
+    override suspend fun getAlert(address: String, type: Int): Alert {
+       return localDataSource.getAlert(address,type)
+    }
+
+   override suspend fun updateAlert(alert: Alert) {
+        localDataSource.updateAlert(alert)
     }
 
 

@@ -22,8 +22,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.app.our.cskies.R
-import com.app.our.cskies.SplashCall
+import com.app.our.cskies.splash.SplashCall
+import com.app.our.cskies.alerts.view.FragmentAlertsPage
 import com.app.our.cskies.favorites.view.FragmentFavoritesPage
+import com.app.our.cskies.settings.view.FragmentSettingPage
 import com.app.our.cskies.utils.Dialogs
 import com.app.our.cskies.utils.Setting
 import com.app.our.cskies.utils.UserCurrentLocation
@@ -51,6 +53,8 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener  {
     var mode:Int=if(Setting.location== Setting.Location.GPS)0 else 1
     lateinit var progress: ProgressDialog
     var isFavorite:Boolean=false
+    var isSetting:Boolean=false
+    var isAlert:Boolean=false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -65,18 +69,34 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener  {
             btnDoneMap.setOnClickListener{
                 if(pinSelected)
                 {
-                    if(!isFavorite) {
+
+                    if(!isFavorite&&!isSetting&&!isAlert) {
                         val pref = SharedPrefOps(requireContext().applicationContext)
                         pref.insertInData()
                         pref.saveLastLocation()
                         (requireActivity() as SplashCall).showHome()
                         mMapView.onDestroy()
                         dismiss()
-                    }else{
-                        var fragmentShowFavoritesPage = FragmentFavoritesPage()
+                    }else if(isFavorite){
+                        val fragmentShowFavoritesPage = FragmentFavoritesPage()
                         fragmentShowFavoritesPage.isNew=true
                         activity!!.supportFragmentManager.beginTransaction()
                             .replace(R.id.my_host_fragment, fragmentShowFavoritesPage, null)
+                            .addToBackStack(null)
+                            .commit()
+                    }else if(isSetting)
+                    {
+                        val ftragmentSettings = FragmentSettingPage()
+                        ftragmentSettings.isLocationMapSet=true
+                        activity!!.supportFragmentManager.beginTransaction()
+                            .replace(R.id.my_host_fragment, ftragmentSettings, null)
+                            .addToBackStack(null)
+                            .commit()
+                    }else if(isAlert){
+                        val ftragmentAlerts = FragmentAlertsPage()
+                        ftragmentAlerts.isLocationMapSet=true
+                        activity!!.supportFragmentManager.beginTransaction()
+                            .replace(R.id.my_host_fragment, ftragmentAlerts, null)
                             .addToBackStack(null)
                             .commit()
                     }
@@ -155,10 +175,19 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener  {
             val pref=SharedPrefOps(requireActivity().applicationContext)
             pref.insertInData()
             pref.saveLastLocation()
-            fusedLocationProviderClient.removeLocationUpdates(this)
-            progress.dismiss()
-            (requireActivity() as SplashCall).showHome()
 
+            fusedLocationProviderClient.removeLocationUpdates(this)
+            if(!isSetting) {
+                progress.dismiss()
+                (requireActivity() as SplashCall).showHome()
+            }else{
+                val ftragmentSettings = FragmentSettingPage()
+                ftragmentSettings.isLocationMapSet=true
+                activity!!.supportFragmentManager.beginTransaction()
+                    .replace(R.id.my_host_fragment, ftragmentSettings, null)
+                    .addToBackStack(null)
+                    .commit()
+            }
         }
     }
 
@@ -214,7 +243,7 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener  {
              mGoogleMap.setOnMapLongClickListener{
                  val latitude=it?.latitude
                  val longitude=it?.longitude
-                 if(!isFavorite) {
+                 if(!isFavorite&&!isAlert) {
                      UserCurrentLocation.latitude = latitude.toString()
                      UserCurrentLocation.longitude = longitude.toString()
                  }else
