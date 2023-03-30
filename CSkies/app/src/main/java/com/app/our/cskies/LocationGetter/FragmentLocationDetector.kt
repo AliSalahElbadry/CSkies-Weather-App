@@ -17,6 +17,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.SearchView
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -33,8 +34,7 @@ import com.app.our.cskies.shard_pref.SharedPrefOps
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.Task
 import java.util.*
@@ -44,7 +44,7 @@ class FragmentLocationDetector() : DialogFragment(),GoogleApiClient.ConnectionCa
 GoogleApiClient.OnConnectionFailedListener, LocationListener  {
 
     lateinit var btnDoneMap:ImageButton
-
+    lateinit var searchView: SearchView
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var mGoogleApiClient: GoogleApiClient
     lateinit var mGoogleMap: GoogleMap
@@ -66,6 +66,34 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener  {
         super.onViewCreated(view, savedInstanceState)
         if(mode==1) {
             btnDoneMap=view.findViewById(R.id.imageButtonMapConfirm)
+            searchView=view.findViewById(R.id.searchViewPlace)
+            searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+                @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                  val latlng=query?.let { UserCurrentLocation.getLatLonForAddress(it,requireContext().applicationContext) }
+                   if(latlng!=null) {
+                       val cameraUpdate = CameraUpdateFactory.newLatLngZoom(latlng, 10F)
+                       if(!isFavorite&&!isAlert) {
+                           UserCurrentLocation.latitude = latlng.latitude.toString()
+                           UserCurrentLocation.longitude = latlng.longitude.toString()
+                       }else
+                       {
+                           UserCurrentLocation.favoriteLat = latlng.latitude.toString()
+                           UserCurrentLocation.favoriteLon = latlng.longitude.toString()
+                       }
+                       pinSelected=true
+                       mGoogleMap.clear()
+                       mGoogleMap.addMarker(MarkerOptions().position(latlng))
+                       mGoogleMap.animateCamera(cameraUpdate)
+
+                   }
+                    return false
+                }
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    return  false
+                }
+
+            })
             btnDoneMap.setOnClickListener{
                 if(pinSelected)
                 {

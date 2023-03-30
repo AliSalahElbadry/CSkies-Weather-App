@@ -31,7 +31,8 @@
             android:value="@integer/google_play_services_version" />
         <activity
             android:name=".splash.ActivitySplash"
-            android:exported="true">
+            android:exported="true" android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

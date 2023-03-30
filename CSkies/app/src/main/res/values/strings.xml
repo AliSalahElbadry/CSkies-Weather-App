@@ -37,4 +37,5 @@
     <string name="close">Close</string>
     <string name="weather_alarm">Weather Alarm</string>
     <string name="add_new_location">Add New Location</string>
+    <string name="enter_place">Enter Place</string>
 </resources>

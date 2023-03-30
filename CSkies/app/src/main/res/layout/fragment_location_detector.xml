@@ -7,6 +7,7 @@
     tools:context=".LocationGetter.FragmentLocationDetector"
 
     >
+
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
@@ -24,5 +25,12 @@
         android:background="@drawable/map_done_back"
         android:scaleType="fitXY"
         android:src="@drawable/confirm" />
+
+    <SearchView
+        android:id="@+id/searchViewPlace"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:textAlignment="center" />
 
 </FrameLayout>

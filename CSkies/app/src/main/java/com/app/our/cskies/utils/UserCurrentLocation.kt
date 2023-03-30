@@ -3,6 +3,7 @@ package com.app.our.cskies.utils
 import android.content.Context
 import android.location.Address
 import android.location.Geocoder
+import com.google.android.gms.maps.model.LatLng
 import java.util.*
 
 object UserCurrentLocation {
@@ -28,5 +29,16 @@ object UserCurrentLocation {
         } else if (address?.get(0)?.adminArea.isNullOrEmpty()) {
             address?.get(0)?.countryName.toString()
         } else address?.get(0)?.countryName.toString()+" , "+address?.get(0)?.adminArea
+    }
+    fun getLatLonForAddress(location: String, context: Context): LatLng {
+        val geocoder = Geocoder(context, Locale(Setting.getLang()))
+        val addressList = geocoder.getFromLocationName(location, 1)
+        var address:Address?=null
+        if(addressList?.isNotEmpty() == true)
+        {
+            address = addressList[0]
+        }
+
+        return if(address!=null)LatLng(address.latitude, address.longitude) else LatLng(0.0, 0.0)
     }
 }

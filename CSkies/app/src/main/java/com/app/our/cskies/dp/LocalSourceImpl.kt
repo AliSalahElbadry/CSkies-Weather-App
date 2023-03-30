@@ -7,6 +7,7 @@ import com.app.our.cskies.dp.model.DayWeather
 import com.app.our.cskies.dp.model.HourWeather
 import com.app.our.cskies.dp.model.Location
 import com.app.our.cskies.model.LocationData
+import com.app.our.cskies.utils.Setting
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
@@ -65,7 +66,7 @@ class LocalSourceImpl private constructor(context: Context) :LocalDataSource {
     }
 
     override  fun getCurrentLocation(isCurrent: Boolean): Flow<Location> {
-        return locationOps.getCurrentLocation(true)
+        return locationOps.getCurrentLocation(true,Setting.getLang())
     }
 
     override  fun getListOfAlerts(): Flow<List<Alert>>{

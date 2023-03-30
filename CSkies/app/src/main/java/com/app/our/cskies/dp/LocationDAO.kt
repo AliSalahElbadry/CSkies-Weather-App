@@ -45,8 +45,8 @@ interface LocationDAO {
 
     @Query("select * from HourWeather where  address like :address")
      fun selectHoursInLocation(address:String): Flow<List<HourWeather>>
-    @Query("select * from Location where isCurrent like :isCurrent")
-    fun getCurrentLocation(isCurrent:Boolean):Flow<Location>
+    @Query("select * from Location where isCurrent like :isCurrent and lang like:lang")
+    fun getCurrentLocation(isCurrent:Boolean,lang:String):Flow<Location>
 
     @Query("select * from Alert")
     fun getListOfAlerts():Flow<List<Alert>>
