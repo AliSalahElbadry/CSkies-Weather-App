@@ -1,23 +1,21 @@
 package com.app.our.cskies.Repository
 
-import android.content.Context
 import com.app.our.cskies.dp.LocalDataSource
-import com.app.our.cskies.dp.LocalSourceImpl
 import com.app.our.cskies.dp.model.Alert
 import com.app.our.cskies.dp.model.DayWeather
 import com.app.our.cskies.dp.model.HourWeather
 import com.app.our.cskies.dp.model.Location
 import com.app.our.cskies.model.LocationData
 import com.app.our.cskies.network.ApiState
+import com.app.our.cskies.network.RemoteSource
 import com.app.our.cskies.network.RemoteSourceImpl
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 
 
-class Repository private constructor(context: Context): RepositoryInterface {
-    private val remoteSource:RemoteSourceImpl=RemoteSourceImpl.getInstance()!!
-    private val localDataSource:LocalDataSource=LocalSourceImpl.getInstance(context)
+class Repository private constructor( val localDataSource:LocalDataSource,val remoteSource: RemoteSourceImpl): RepositoryInterface {
+
     override suspend fun getWeatherData(
         latitude: String,
         longitude: String,
@@ -79,11 +77,11 @@ class Repository private constructor(context: Context): RepositoryInterface {
 
     companion object{
         private var repository: Repository?=null
-        fun getInstance(context: Context): Repository
+        fun getInstance( localDataSource:LocalDataSource,remoteSource: RemoteSourceImpl): Repository
         {
             if(repository ==null)
             {
-                repository = Repository(context)
+                repository = Repository(localDataSource,remoteSource)
             }
             return repository!!
         }

@@ -23,7 +23,9 @@ import com.app.our.cskies.alerts.utils.AlarmUtils
 import com.app.our.cskies.alerts.viewmodel.AlertViewModelFactory
 import com.app.our.cskies.alerts.viewmodel.AlertsViewModel
 import com.app.our.cskies.databinding.FragmentAlertsPageBinding
+import com.app.our.cskies.dp.LocalSourceImpl
 import com.app.our.cskies.dp.model.Alert
+import com.app.our.cskies.network.RemoteSourceImpl
 import com.app.our.cskies.utils.Dialogs
 import com.app.our.cskies.utils.Setting
 import com.app.our.cskies.utils.UserStates
@@ -49,9 +51,10 @@ class FragmentAlertsPage : Fragment(),OnClickDeleteAlert{
         adapter= AlertsAdapter(listOf(),this)
         binding.recyclerView.layoutManager=LinearLayoutManager(this.context)
         binding.recyclerView.adapter=adapter
-        //factory= AlertViewModelFactory(Repository.getInstance(requireContext()))
-      //  alertsViewModel=ViewModelProvider(this,factory)[AlertsViewModel::class.java]
-        alertsViewModel=AlertsViewModel(Repository.getInstance(requireContext()))
+        factory= AlertViewModelFactory(Repository.getInstance(
+            LocalSourceImpl.getInstance(requireActivity().applicationContext),
+            RemoteSourceImpl.getInstance()!!))
+        alertsViewModel=ViewModelProvider(this,factory)[AlertsViewModel::class.java]
         alertsViewModel.getAllAlerts()
         lifecycleScope.launch {
             alertsViewModel.alertSetter.observe(viewLifecycleOwner, Observer {

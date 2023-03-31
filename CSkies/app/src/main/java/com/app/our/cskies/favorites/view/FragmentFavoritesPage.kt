@@ -13,10 +13,14 @@ import com.app.our.cskies.LocationGetter.FragmentLocationDetector
 import com.app.our.cskies.R
 import com.app.our.cskies.Repository.Repository
 import com.app.our.cskies.databinding.FragmentFavoritesPageBinding
+import com.app.our.cskies.dp.LocalDataSource
+import com.app.our.cskies.dp.LocalSourceImpl
 import com.app.our.cskies.dp.model.Location
 import com.app.our.cskies.favorites.viewmodel.FavoritesViewModel
 import com.app.our.cskies.favorites.viewmodel.FavoritesViewModelFactory
+import com.app.our.cskies.network.RemoteSourceImpl
 import com.app.our.cskies.utils.Dialogs
+import com.app.our.cskies.utils.Setting
 import com.app.our.cskies.utils.UserStates
 import com.app.our.cskies.weather_data_show.view.FragmentShowLocationData
 import kotlinx.coroutines.launch
@@ -39,17 +43,18 @@ class FragmentFavoritesPage : Fragment(),IOnClickItemListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val factory= FavoritesViewModelFactory(Repository.getInstance(requireActivity().applicationContext))
+        val factory= FavoritesViewModelFactory(Repository.getInstance(LocalSourceImpl.getInstance(requireActivity().applicationContext),
+            RemoteSourceImpl.getInstance()!!))
         favoritesViewModel= ViewModelProvider(this,factory)[FavoritesViewModel::class.java]
         requireActivity().title = resources.getString(R.string.favorites)
         binding.recyclerView.layoutManager=LinearLayoutManager(this.context)
         binding.recyclerView.adapter=favoritesAdapter
         binding.fab.setOnClickListener{
             if(UserStates.checkConnectionState(requireActivity())) {
-                var fragmentShowLocationDetector = FragmentLocationDetector()
+                val fragmentShowLocationDetector = FragmentLocationDetector()
                 fragmentShowLocationDetector.mode = 1
                 fragmentShowLocationDetector.isFavorite = true
-                activity!!.supportFragmentManager.beginTransaction()
+                requireActivity().supportFragmentManager.beginTransaction()
                     .replace(
                         com.app.our.cskies.R.id.my_host_fragment,
                         fragmentShowLocationDetector,
@@ -58,15 +63,15 @@ class FragmentFavoritesPage : Fragment(),IOnClickItemListener {
                     .addToBackStack(null)
                     .commit()
             }else{
-                Dialogs.SnakeToast(binding.root,"Please Check Your Connection")
+                Dialogs.SnakeToast(binding.root,if(Setting.getLang()=="en")"Please Check Your Connection" else "تأكد من اتصال الانترنت")
             }
         }
            if(isNew) {
-               favoritesViewModel.setUpFavoriteLocation(this.context!!)
+               favoritesViewModel.setUpFavoriteLocation(requireContext())
            }
            favoritesViewModel.getAllFavoriteLocations()
         lifecycleScope.launch {
-           favoritesViewModel.liveData.observe(this@FragmentFavoritesPage, Observer {
+           favoritesViewModel.liveData.observe(viewLifecycleOwner, Observer {
                if(it.isNotEmpty()){
                    binding.imageView.visibility=View.INVISIBLE
                }else{
@@ -77,19 +82,19 @@ class FragmentFavoritesPage : Fragment(),IOnClickItemListener {
            })
        }
         lifecycleScope.launch{
-            favoritesViewModel.locationData.observe(this@FragmentFavoritesPage, Observer {
-                 var fragmentShowLocationData = FragmentShowLocationData()
+            favoritesViewModel.locationData.observe(viewLifecycleOwner, Observer {
+                 val fragmentShowLocationData = FragmentShowLocationData()
                  fragmentShowLocationData.data=it
                  fragmentShowLocationData.mode=2
-                 activity!!.supportFragmentManager.beginTransaction()
+                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(com.app.our.cskies.R.id.my_host_fragment, fragmentShowLocationData, null)
-                     .addToBackStack("fav")
+                     .addToBackStack(null)
                     .commit()
 
             })
         }
         lifecycleScope.launch{
-            favoritesViewModel.newLocation.observe(this@FragmentFavoritesPage, Observer {
+            favoritesViewModel.newLocation.observe(viewLifecycleOwner, Observer {
                 favoritesAdapter.locations.add(it)
                 favoritesAdapter.notifyDataSetChanged()
                 Dialogs.SnakeToast(binding.root,"New Favorite Added Successfully")

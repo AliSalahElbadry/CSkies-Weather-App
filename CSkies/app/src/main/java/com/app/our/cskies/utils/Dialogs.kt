@@ -1,6 +1,5 @@
 package com.app.our.cskies.utils
 
-import android.app.ProgressDialog
 import android.content.Context
 import android.graphics.Color
 import android.view.View
@@ -24,13 +23,6 @@ object Dialogs {
         textView.textAlignment=TextView.TEXT_ALIGNMENT_CENTER
         snackbar.show()
 
-    }
-    fun getProgressDialog(context: Context, title:String, message:String): ProgressDialog {
-        var progressDialog = ProgressDialog(context)
-        progressDialog.setTitle(title)
-        progressDialog.setMessage(message)
-        progressDialog.setCancelable(false) // blocks UI interaction
-        return progressDialog
     }
   fun getAletDialogBuilder(context: Context,title:String,message:String): AlertDialog.Builder {
       val builder = AlertDialog.Builder(context)

@@ -7,6 +7,14 @@
     android:layoutDirection="locale"
     tools:context=".weather_data_show.view.FragmentShowLocationData">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loadingAnimHome"
+        android:layout_width="wrap_content"
+        android:layout_height="320dp"
+        android:layout_gravity="center"
+        app:lottie_fileName="loading.json"
+        app:lottie_loop="true" />
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/pullToRefresh"
         android:layout_width="match_parent"

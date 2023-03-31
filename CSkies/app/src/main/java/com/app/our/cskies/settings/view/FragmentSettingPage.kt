@@ -9,9 +9,7 @@ import com.app.our.cskies.LocationGetter.FragmentLocationDetector
 import com.app.our.cskies.R
 import com.app.our.cskies.databinding.FragmentSettingPageBinding
 import com.app.our.cskies.shard_pref.SharedPrefOps
-import com.app.our.cskies.utils.Dialogs
-import com.app.our.cskies.utils.LanguageUtils
-import com.app.our.cskies.utils.Setting
+import com.app.our.cskies.utils.*
 
 class FragmentSettingPage : Fragment() {
 
@@ -40,26 +38,38 @@ class FragmentSettingPage : Fragment() {
             pref.saveLastLocation()
         }
         binding.radioGroupLocation.setOnCheckedChangeListener { group, checkedId ->
-            if(checkedId==R.id.radioButtonGps)
-            {
-                Setting.location=Setting.Location.GPS
-                val locationDetector= FragmentLocationDetector()
-                locationDetector.isSetting=true
-                locationDetector.mode=0
-                activity!!.supportFragmentManager.beginTransaction()
-                    .replace(R.id.my_host_fragment, locationDetector, null)
-                    .addToBackStack(null)
-                    .commit()
-            }else{
-                Setting.location=Setting.Location.MAP
-                val locationDetector= FragmentLocationDetector()
-                locationDetector.isSetting=true
-                locationDetector.mode=1
-                activity!!.supportFragmentManager.beginTransaction()
-                    .replace(R.id.my_host_fragment, locationDetector, null)
-                    .addToBackStack(null)
-                    .commit()
-            }
+          if(UserStates.checkConnectionState(requireActivity())) {
+              if (checkedId == R.id.radioButtonGps) {
+                  Dialogs.SnakeToast(
+                      binding.root,
+                      if (Setting.getLang() == "en") "Loading Your Location" else "جاري تحديد موقعك"
+                  )
+                  Setting.location = Setting.Location.GPS
+                  val locationDetector = FragmentLocationDetector()
+                  locationDetector.isSetting = true
+                  locationDetector.mode = 0
+                  requireActivity().supportFragmentManager.beginTransaction()
+                      .replace(R.id.my_host_fragment, locationDetector, null)
+                      .addToBackStack(null)
+                      .commit()
+              } else {
+                  Setting.location = Setting.Location.MAP
+                  val locationDetector = FragmentLocationDetector()
+                  locationDetector.isSetting = true
+                  locationDetector.mode = 1
+                  requireActivity().supportFragmentManager.beginTransaction()
+                      .replace(R.id.my_host_fragment, locationDetector, null)
+                      .addToBackStack(null)
+                      .commit()
+              }
+          }else{
+              Dialogs.SnakeToast(view,if(Setting.getLang()=="en")
+                  "Error Connection"
+              else
+                  "لا يوجد اتصال انترنت"
+              )
+          }
+
         }
         binding.radioGroupTemp.setOnCheckedChangeListener { group, checkedId ->
             binding.buttonApplyChange.visibility=View.VISIBLE
@@ -110,11 +120,14 @@ class FragmentSettingPage : Fragment() {
             LanguageUtils.setAppLayoutDirections(Setting.getLang(),requireContext().applicationContext)
             LanguageUtils.changeLang(requireActivity().applicationContext,Setting.getLang())
             /*
+            //restart App
             val ctx: Context = requireActivity().applicationContext
             val pm: PackageManager = ctx.packageManager
             val intent = pm.getLaunchIntentForPackage(ctx.packageName)
             val mainIntent = Intent.makeRestartActivityTask(intent!!.component)
             ctx.startActivity(mainIntent)*/
+
+            //restart activity
             requireActivity().finish()
             requireActivity().overridePendingTransition(0, 0)
             startActivity(requireActivity().intent)

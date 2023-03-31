@@ -15,8 +15,11 @@ import androidx.core.app.NotificationManagerCompat
 import com.app.our.cskies.R
 import com.app.our.cskies.Repository.Repository
 import com.app.our.cskies.alerts.utils.AlarmUtils
+import com.app.our.cskies.dp.LocalDataSource
+import com.app.our.cskies.dp.LocalSourceImpl
 import com.app.our.cskies.dp.model.Alert
 import com.app.our.cskies.network.ApiState
+import com.app.our.cskies.network.RemoteSourceImpl
 import com.app.our.cskies.utils.Setting
 import com.app.our.cskies.utils.UserCurrentLocation
 import com.app.our.cskies.utils.UserStates
@@ -28,7 +31,7 @@ class MyService : Service() {
     private var CHANNEL_ID: String="channel_1234_Skies"
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val alert = intent?.getSerializableExtra("alarm") as Alert
-        val repo = Repository.getInstance(this)
+        val repo = Repository.getInstance(LocalSourceImpl.getInstance(this), RemoteSourceImpl.getInstance()!!)
         if (UserStates.checkConnectionState(this)) {
             CoroutineScope(Dispatchers.IO).launch {
                 repo.getWeatherData(alert.lat, alert.lon).collect { apiState ->

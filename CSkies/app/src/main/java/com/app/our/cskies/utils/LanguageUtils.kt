@@ -6,7 +6,6 @@ import android.content.ContextWrapper
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
-import android.view.View
 import java.util.*
 
 object LanguageUtils {
@@ -35,30 +34,10 @@ object LanguageUtils {
     }
 
 
-    fun setViewLanguage(view: View, lang:Setting.Lang) {
-        val languageToLoad =if(lang==Setting.Lang.AR)"ar" else "en"
-        val locale = Locale(languageToLoad)
-        Locale.setDefault(locale)
-        val config = Configuration()
-        config.locale = locale
-        view.context.resources.updateConfiguration(
-            config,
-            view.context.resources.displayMetrics
-        )
-    }
     fun setAppLayoutDirections(locale:String,context:Context){
         val configuration: Configuration = context.resources.configuration
         configuration.setLayoutDirection(Locale(locale))
         context.resources.updateConfiguration(configuration, context.resources.displayMetrics)
-    }
-    fun updateContextLanguage(context: Context, language: String): Boolean {
-        val locale = Locale(language)
-        Locale.setDefault(locale)
-        val resources: Resources = context.resources
-        val configuration = resources.configuration
-        configuration.locale = locale
-        resources.updateConfiguration(configuration, resources.displayMetrics)
-        return true
     }
 
     @SuppressLint("ObsoleteSdkInt")

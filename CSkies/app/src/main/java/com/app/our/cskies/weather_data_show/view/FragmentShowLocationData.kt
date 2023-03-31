@@ -7,38 +7,52 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.lottie.LottieAnimationView
 import com.app.our.cskies.R
 import com.app.our.cskies.Repository.Repository
 import com.app.our.cskies.databinding.FragmentShowLocationDataBinding
+import com.app.our.cskies.dp.LocalSourceImpl
 import com.app.our.cskies.model.LocationData
 import com.app.our.cskies.network.ApiState
+import com.app.our.cskies.network.RemoteSourceImpl
 import com.app.our.cskies.utils.*
 import com.app.our.cskies.weather_data_show.viewmodel.LocationDataViewModel
+import com.app.our.cskies.weather_data_show.viewmodel.LocationDataViewModelFactory
 
 
 class FragmentShowLocationData : Fragment() {
     var mode:Int=0
     lateinit var locationDataViewModel: LocationDataViewModel
+    lateinit var factory:LocationDataViewModelFactory
     lateinit var binding:FragmentShowLocationDataBinding
     lateinit var daysAdapter: DaysAdapter
     private lateinit var hoursAdapter: HoursAdapter
     lateinit var data: LocationData
     var isFavoriteLocation:Boolean=false
     var isCurrentLocation:Boolean=true
+    lateinit var loadingAnim:LottieAnimationView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-         LanguageUtils.setAppLocale(Setting.getLang(),context!!)
+         LanguageUtils.setAppLocale(Setting.getLang(),requireContext())
          binding= FragmentShowLocationDataBinding.inflate(inflater,container,false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        locationDataViewModel = LocationDataViewModel(Repository.getInstance(requireContext()))
+        loadingAnim=view.findViewById(R.id.loadingAnimHome)
+        loadingAnim.playAnimation()
+        binding.pullToRefresh.visibility=View.INVISIBLE
+        factory = LocationDataViewModelFactory(Repository.getInstance(
+            LocalSourceImpl.getInstance(requireActivity().applicationContext),
+            RemoteSourceImpl.getInstance()!!))
+
+        locationDataViewModel=ViewModelProvider(this, factory)[LocationDataViewModel::class.java]
+
         daysAdapter = DaysAdapter(listOf())
         hoursAdapter = HoursAdapter(listOf())
         binding.recyclerViewdayHoursData.layoutManager =
@@ -60,7 +74,7 @@ class FragmentShowLocationData : Fragment() {
                 if(UserStates.checkConnectionState(requireActivity())) {
                     try {
                         locationDataViewModel.getAllFromNetwork(
-                            this.context!!,
+                            requireContext(),
                             isCurrentLocation,
                             isFavoriteLocation
                         )
@@ -71,9 +85,12 @@ class FragmentShowLocationData : Fragment() {
                 }else{
                     locationDataViewModel.getCurrentLocation()
                 }
-                    locationDataViewModel.liveData.observe(this) {
+                    locationDataViewModel.liveData.observe(viewLifecycleOwner) {
                         when (it) {
                             is ApiState.TransformedState -> {
+                                loadingAnim.cancelAnimation()
+                                loadingAnim.visibility=View.GONE
+                                binding.pullToRefresh.visibility=View.VISIBLE
                                 binding.pullToRefresh.isRefreshing = false
                                 data = it.locationData
                                 hoursAdapter.hours = data.hours
@@ -95,6 +112,9 @@ class FragmentShowLocationData : Fragment() {
             }
             2 -> {
                 //favorite item
+                loadingAnim.cancelAnimation()
+                loadingAnim.visibility=View.GONE
+                binding.pullToRefresh.visibility=View.VISIBLE
                 showFavoriteLocationData()
             }
         }
