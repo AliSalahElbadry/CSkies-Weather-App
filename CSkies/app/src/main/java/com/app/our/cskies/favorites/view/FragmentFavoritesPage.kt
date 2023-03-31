@@ -1,25 +1,22 @@
 package com.app.our.cskies.favorites.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.replace
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.app.our.cskies.LocationGetter.FragmentLocationDetector
 import com.app.our.cskies.R
 import com.app.our.cskies.Repository.Repository
 import com.app.our.cskies.databinding.FragmentFavoritesPageBinding
 import com.app.our.cskies.dp.model.Location
 import com.app.our.cskies.favorites.viewmodel.FavoritesViewModel
-import com.app.our.cskies.home.viewModel.ViewModelHome
+import com.app.our.cskies.favorites.viewmodel.FavoritesViewModelFactory
 import com.app.our.cskies.utils.Dialogs
-import com.app.our.cskies.utils.Setting
 import com.app.our.cskies.utils.UserStates
 import com.app.our.cskies.weather_data_show.view.FragmentShowLocationData
 import kotlinx.coroutines.launch
@@ -41,7 +38,9 @@ class FragmentFavoritesPage : Fragment(),IOnClickItemListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        favoritesViewModel= FavoritesViewModel(Repository.getInstance(binding.root.context))
+
+        val factory= FavoritesViewModelFactory(Repository.getInstance(requireActivity().applicationContext))
+        favoritesViewModel= ViewModelProvider(this,factory)[FavoritesViewModel::class.java]
         requireActivity().title = resources.getString(R.string.favorites)
         binding.recyclerView.layoutManager=LinearLayoutManager(this.context)
         binding.recyclerView.adapter=favoritesAdapter
@@ -68,6 +67,11 @@ class FragmentFavoritesPage : Fragment(),IOnClickItemListener {
            favoritesViewModel.getAllFavoriteLocations()
         lifecycleScope.launch {
            favoritesViewModel.liveData.observe(this@FragmentFavoritesPage, Observer {
+               if(it.isNotEmpty()){
+                   binding.imageView.visibility=View.INVISIBLE
+               }else{
+                   binding.imageView.visibility=View.VISIBLE
+               }
                favoritesAdapter.locations= it as MutableList<Location>
                favoritesAdapter.notifyDataSetChanged()
            })

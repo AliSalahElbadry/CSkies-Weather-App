@@ -8,17 +8,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.our.cskies.Repository.Repository
 import com.app.our.cskies.dp.model.Location
-import com.app.our.cskies.home.viewModel.ViewModelHome
 import com.app.our.cskies.model.LocationData
 import com.app.our.cskies.network.ApiState
 import com.app.our.cskies.utils.Setting
 import com.app.our.cskies.utils.UserCurrentLocation
 import com.app.our.cskies.weather_data_show.viewmodel.FactoryTransformer
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class FavoritesViewModel(private val repoClass:Repository):ViewModel() {
 
@@ -98,10 +94,6 @@ class FavoritesViewModel(private val repoClass:Repository):ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             repoClass.insertLocation(data)
         }
-    }
-
-    fun setTitle(i: Int) {
-        ViewModelHome().setTitle(i)
     }
 
 }

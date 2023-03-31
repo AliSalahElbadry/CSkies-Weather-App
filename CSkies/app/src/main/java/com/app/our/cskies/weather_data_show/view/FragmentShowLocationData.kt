@@ -1,8 +1,6 @@
 package com.app.our.cskies.weather_data_show.view
 
 import android.annotation.SuppressLint
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.airbnb.lottie.LottieAnimationView
 import com.app.our.cskies.R
 import com.app.our.cskies.Repository.Repository
 import com.app.our.cskies.databinding.FragmentShowLocationDataBinding
@@ -17,9 +16,6 @@ import com.app.our.cskies.model.LocationData
 import com.app.our.cskies.network.ApiState
 import com.app.our.cskies.utils.*
 import com.app.our.cskies.weather_data_show.viewmodel.LocationDataViewModel
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 
 
 class FragmentShowLocationData : Fragment() {
@@ -61,7 +57,6 @@ class FragmentShowLocationData : Fragment() {
         binding.recyclerViewDaysInWeekData.adapter = daysAdapter
         when (mode) {
             0 -> {
-                requireActivity().title=resources.getString(R.string.home)
                 if(UserStates.checkConnectionState(requireActivity())) {
                     try {
                         locationDataViewModel.getAllFromNetwork(

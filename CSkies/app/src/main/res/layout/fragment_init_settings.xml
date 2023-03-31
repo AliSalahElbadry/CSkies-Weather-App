@@ -14,7 +14,7 @@
             android:layout_width="261dp"
             android:layout_height="48dp"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/home_back_week_days"
+            android:background="@drawable/toolbar_back"
             android:gravity="center_horizontal|center_vertical"
             android:text="@string/initial_setting"
             android:textAlignment="gravity"
@@ -67,10 +67,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
-                    android:background="@drawable/city_name_back"
+                    android:button="@android:drawable/btn_radio"
                     android:padding="5dp"
                     android:text="@string/on"
-                    android:textColor="#FFFFFF"
+                    android:textColor="#27273E"
                     android:textSize="20sp" />
 
                 <RadioButton
@@ -78,10 +78,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
-                    android:background="@drawable/city_name_back"
+                    android:button="@android:drawable/btn_radio"
                     android:padding="5dp"
                     android:text="@string/off"
-                    android:textColor="#FFFFFF"
+                    android:textColor="#27273E"
                     android:textSize="20sp" />
             </RadioGroup>
 
@@ -130,10 +130,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
-                    android:background="@drawable/city_name_back"
+                    android:button="@android:drawable/btn_radio"
                     android:padding="5dp"
                     android:text="@string/map"
-                    android:textColor="#FFFFFF"
+                    android:textColor="#27273E"
                     android:textSize="20sp" />
 
                 <RadioButton
@@ -141,10 +141,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
-                    android:background="@drawable/city_name_back"
+                    android:button="@android:drawable/btn_radio"
                     android:padding="5dp"
                     android:text="@string/gps"
-                    android:textColor="#FFFFFF"
+                    android:textColor="#27273E"
                     android:textSize="20sp" />
             </RadioGroup>
 
@@ -152,8 +152,8 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/initSettingDone"
-            android:layout_width="181dp"
-            android:layout_height="69dp"
+            android:layout_width="183dp"
+            android:layout_height="42dp"
             android:layout_gravity="center_horizontal|center_vertical"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="10dp"

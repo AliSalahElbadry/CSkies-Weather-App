@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:accessibilityLiveRegion="none"
-        android:background="@android:color/transparent"
+        android:background="@drawable/favback"
         android:scrollbarThumbHorizontal="@color/transparent"
         android:scrollbarThumbVertical="@color/transparent"
         android:scrollbarTrackHorizontal="@color/transparent"
@@ -20,6 +20,7 @@
             android:id="@+id/imageView"
             android:layout_width="277dp"
             android:layout_height="258dp"
+            android:alpha="0.5"
             android:src="@drawable/favorite_location_back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -45,7 +46,6 @@
             android:contentDescription="@string/add_new_location"
             android:focusable="true"
             android:src="@drawable/pin_location_add"
-            app:tint="#00F619"
             app:backgroundTint="#000AFA0A"
             app:elevation="0dp"
             app:fabSize="auto"
@@ -54,8 +54,9 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView"
             app:layout_constraintVertical_bias="0.815"
             app:maxImageSize="56dp"
+            app:rippleColor="#40FF32"
 
-            app:rippleColor="#40FF32" />
+            app:tint="#00F619" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

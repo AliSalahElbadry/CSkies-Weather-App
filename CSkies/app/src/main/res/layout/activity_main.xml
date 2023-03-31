@@ -5,6 +5,7 @@
     android:id="@+id/drower_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/back"
     android:theme="@style/Theme.AppCompat.NoActionBar">
 
     <LinearLayout
@@ -16,18 +17,9 @@
             android:id="@+id/myToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@drawable/toolbar_back">
-
-            <TextView
-                android:id="@+id/toolbar_title"
-                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="#FFC107"
-                android:textSize="24sp"
-                android:textStyle="bold|italic" />
-        </androidx.appcompat.widget.Toolbar>
+            android:background="@drawable/toolbar_back"
+            app:titleTextAppearance="@style/ToolbarTitle"
+            app:titleTextColor="#FFC107" />
 
         <fragment
             android:id="@+id/my_host_fragment"

@@ -1,8 +1,5 @@
 package com.app.our.cskies.settings.view
 
-import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +8,6 @@ import androidx.fragment.app.Fragment
 import com.app.our.cskies.LocationGetter.FragmentLocationDetector
 import com.app.our.cskies.R
 import com.app.our.cskies.databinding.FragmentSettingPageBinding
-import com.app.our.cskies.home.viewModel.ViewModelHome
-import com.app.our.cskies.settings.viewmodel.ViewModelSetting
 import com.app.our.cskies.shard_pref.SharedPrefOps
 import com.app.our.cskies.utils.Dialogs
 import com.app.our.cskies.utils.LanguageUtils
@@ -31,6 +26,7 @@ class FragmentSettingPage : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initSettingsUi()
         if(isLocationMapSet)
         {
@@ -113,11 +109,16 @@ class FragmentSettingPage : Fragment() {
             LanguageUtils.setAppLocale(Setting.getLang(),requireActivity().applicationContext)
             LanguageUtils.setAppLayoutDirections(Setting.getLang(),requireContext().applicationContext)
             LanguageUtils.changeLang(requireActivity().applicationContext,Setting.getLang())
+            /*
             val ctx: Context = requireActivity().applicationContext
             val pm: PackageManager = ctx.packageManager
             val intent = pm.getLaunchIntentForPackage(ctx.packageName)
             val mainIntent = Intent.makeRestartActivityTask(intent!!.component)
-            ctx.startActivity(mainIntent)
+            ctx.startActivity(mainIntent)*/
+            requireActivity().finish()
+            requireActivity().overridePendingTransition(0, 0)
+            startActivity(requireActivity().intent)
+            requireActivity().overridePendingTransition(0, 0)
         }
     }
     private fun initSettingsUi() {

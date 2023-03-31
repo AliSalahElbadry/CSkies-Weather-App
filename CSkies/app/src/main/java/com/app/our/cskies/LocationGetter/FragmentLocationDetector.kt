@@ -145,6 +145,8 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener  {
         {
             view.visibility=View.INVISIBLE
             progress= ProgressDialog(requireContext())
+            progress.setCancelable(false)
+            progress.setMessage(requireActivity().resources.getString(R.string.loading))
             progress.show()
             getLastLocation()
         }
@@ -154,15 +156,6 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener  {
         super.onResume()
         if(mode==0)getLastLocation()
     }
-
-    override fun onStop() {
-        super.onStop()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
     @SuppressLint("MissingPermission")
     fun requestLocationUpdates(
         request: LocationRequest,
@@ -203,10 +196,9 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener  {
             val pref=SharedPrefOps(requireActivity().applicationContext)
             pref.insertInData()
             pref.saveLastLocation()
-
             fusedLocationProviderClient.removeLocationUpdates(this)
+            progress.dismiss()
             if(!isSetting) {
-                progress.dismiss()
                 (requireActivity() as SplashCall).showHome()
             }else{
                 val ftragmentSettings = FragmentSettingPage()

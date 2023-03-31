@@ -1,18 +1,14 @@
 package com.app.our.cskies.alerts.viewmodel
 
-import android.icu.text.SimpleDateFormat
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.our.cskies.Repository.Repository
 import com.app.our.cskies.dp.model.Alert
-import com.app.our.cskies.home.viewModel.ViewModelHome
 import com.app.our.cskies.utils.UserCurrentLocation
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
@@ -43,7 +39,7 @@ class AlertsViewModel(val repository: Repository) :ViewModel(){
             }
         }
     }
-    private fun getAllAlerts()
+     fun getAllAlerts()
     {
         viewModelScope.launch (Dispatchers.IO){
             repository.getListOfAlerts().collect{
@@ -62,6 +58,7 @@ class AlertsViewModel(val repository: Repository) :ViewModel(){
         newAlert.lon=UserCurrentLocation.favoriteLon
     }
     fun setAlertToFrom(toDate:String,fromDate:String,type:Int,address:String,numOfDays:Int){
+        Log.e("","Added............viewModel")
         newAlert.fromDate=fromDate
         newAlert.toDate=toDate
         newAlert.type=type
@@ -78,10 +75,5 @@ class AlertsViewModel(val repository: Repository) :ViewModel(){
             }
         }
     }
-
-    fun setTitle(i: Int) {
-        ViewModelHome().setTitle(i)
-    }
-
 
 }

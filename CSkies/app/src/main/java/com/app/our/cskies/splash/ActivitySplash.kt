@@ -24,18 +24,6 @@ class ActivitySplash : AppCompatActivity(), SplashCall {
         supportActionBar?.hide()
         lottieAnimationView = findViewById(R.id.splash_anim)
         lottieAnimationView.playAnimation()
-        val shp=SharedPrefOps(applicationContext)
-        val isLoadingSetting=shp.isNewSettingRestart()
-        shp.saveAsNewSetting(-1)
-        if(isLoadingSetting==1)
-        {
-            Dialogs.SnakeToast(findViewById(R.id.constarin_splash),
-                if(Setting.getLang()=="en")
-                    "Loading New Setting ..."
-                else
-                    "يتم تحميل الاعدادات الجديدة"
-            )
-        }
         lifecycleScope.launch()
         {
             launch {

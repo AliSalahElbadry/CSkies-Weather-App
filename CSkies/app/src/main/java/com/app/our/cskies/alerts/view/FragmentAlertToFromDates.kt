@@ -5,12 +5,16 @@ import android.app.TimePickerDialog
 import android.graphics.Point
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProvider
 import com.app.our.cskies.R
+import com.app.our.cskies.Repository.Repository
+import com.app.our.cskies.alerts.viewmodel.AlertViewModelFactory
 import com.app.our.cskies.alerts.viewmodel.AlertsViewModel
 import com.app.our.cskies.databinding.FragmentAlertToFromDatesBinding
 import com.app.our.cskies.utils.Dialogs
@@ -72,6 +76,7 @@ class FragmentAlertToFromDates : DialogFragment() {
             dateDialog.show()
         }
         binding.buttonAddAlert.setOnClickListener{
+            Log.e("","Added............date")
             if(isSetFrom&&isSetTo&&(numOfDaysTo-numOfDayFrom)>=0&&(dateTo.get(Calendar.HOUR_OF_DAY)-dateFrom.get(Calendar.HOUR_OF_DAY))>=0)
             {
                 viewModel.setAlertToFrom(
@@ -86,18 +91,18 @@ class FragmentAlertToFromDates : DialogFragment() {
             }
         }
     }
-    fun showTimePicker(mode:Int){
+    private fun showTimePicker(mode:Int){
         TimePickerDialog(requireContext(), { view, hourOfDay, minute ->
             if(mode==0) {
                 dateFrom.set(Calendar.HOUR_OF_DAY,hourOfDay)
                 dateFrom.set(Calendar.MINUTE,minute)
-                binding.textViewDateFrom.text=SimpleDateFormat("yyyy-mm-dd hh:mm",Locale(Setting.getLang())).format(dateFrom.time)
+                binding.textViewDateFrom.text=SimpleDateFormat("yyyy-mm-dd hh:mm",Locale(Setting.getLang())).format(dateFrom.timeInMillis)
             }
             else {
                 isSetTo=true
                 dateTo.set(Calendar.HOUR_OF_DAY,hourOfDay)
                 dateTo.set(Calendar.MINUTE,minute)
-                binding.textViewDateTo.text=SimpleDateFormat("yyyy-mm-dd hh:mm",Locale(Setting.getLang())).format(dateTo.time)
+                binding.textViewDateTo.text=SimpleDateFormat("yyyy-mm-dd hh:mm",Locale(Setting.getLang())).format(dateTo.timeInMillis)
             }
         },24,60,false).show()
     }

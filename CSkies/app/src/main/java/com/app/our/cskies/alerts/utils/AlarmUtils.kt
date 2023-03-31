@@ -30,21 +30,20 @@ object  AlarmUtils {
         fromDate.timeInMillis=alert.fromDate.toLong()
         val toDate = Calendar.getInstance()
         toDate.timeInMillis=alert.toDate.toLong()
-        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP,toDate.timeInMillis-fromDate.timeInMillis,if(alert.numOfDays>0)AlarmManager.INTERVAL_DAY else AlarmManager.INTERVAL_HALF_DAY,alarmIntent)
-        //alarmMgr.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,fromDate.timeInMillis,alarmIntent)
+        alarmMgr.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,fromDate.timeInMillis,alarmIntent)
     }
-    /*fun canelAlarm(context: Context, alert:String?, requestCode:Int)
+    fun canelAlarm(context: Context, alert:Alert)
     {
         var alarmMgr: AlarmManager? = null
         alarmMgr = context.applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val alarmIntent: PendingIntent = Intent(context.applicationContext, AlertReceiver::class.java).putExtra(
-            Constants.Alert,alert).let {
-                intent -> PendingIntent.getBroadcast(context.applicationContext, requestCode, intent, PendingIntent.FLAG_IMMUTABLE )
+            "alarm",alert).let {
+                intent -> PendingIntent.getBroadcast(context.applicationContext, alert.getId()!!, intent, PendingIntent.FLAG_IMMUTABLE )
         }
         try {
             alarmMgr.cancel(alarmIntent)
         }catch (e:java.lang.Exception){
             Log.e("","Alarm Not Found "+e.message)
         }
-    }*/
+    }
 }

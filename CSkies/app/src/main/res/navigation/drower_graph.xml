@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/fragmentAlertsPage"
         android:name="com.app.our.cskies.alerts.view.FragmentAlertsPage"
-        android:label="fragment_alerts_page"
-        tools:layout="@layout/fragment_alerts_page" >
+        android:label="@string/alerts"
+        tools:layout="@layout/fragment_alerts_page">
         <action
             android:id="@+id/action_fragmentAlertsPage_to_fragmentSettingPage"
             app:destination="@id/fragmentSettingPage"
@@ -19,8 +19,8 @@
     <fragment
         android:id="@+id/fragmentFavoritesPage"
         android:name="com.app.our.cskies.favorites.view.FragmentFavoritesPage"
-        android:label="fragment_favorites_page"
-        tools:layout="@layout/fragment_favorites_page" >
+        android:label="@string/favorites"
+        tools:layout="@layout/fragment_favorites_page">
         <action
             android:id="@+id/action_fragmentFavoritesPage_to_fragmentAlertsPage"
             app:destination="@id/fragmentAlertsPage"
@@ -30,8 +30,8 @@
     <fragment
         android:id="@+id/fragmentShowLocationData"
         android:name="com.app.our.cskies.weather_data_show.view.FragmentShowLocationData"
-        android:label="fragment_show_location_data"
-        tools:layout="@layout/fragment_show_location_data" >
+        android:label="@string/home"
+        tools:layout="@layout/fragment_show_location_data">
         <action
             android:id="@+id/action_fragmentShowLocationData_to_fragmentFavoritesPage2"
             app:destination="@id/fragmentFavoritesPage"
@@ -41,8 +41,8 @@
     <fragment
         android:id="@+id/fragmentSettingPage"
         android:name="com.app.our.cskies.settings.view.FragmentSettingPage"
-        android:label="fragment_setting_page"
-        tools:layout="@layout/fragment_setting_page" >
+        android:label="@string/setting"
+        tools:layout="@layout/fragment_setting_page">
         <action
             android:id="@+id/action_fragmentSettingPage_to_fragmentShowLocationData"
             app:destination="@id/fragmentShowLocationData"

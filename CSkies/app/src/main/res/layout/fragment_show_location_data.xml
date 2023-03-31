@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:layoutDirection="locale"
     tools:context=".weather_data_show.view.FragmentShowLocationData">
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/pullToRefresh"
         android:layout_width="match_parent"
@@ -14,7 +15,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#FFFFFF"
+            android:background="@drawable/back"
             android:layoutDirection="locale">
 
             <View
@@ -32,7 +33,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewdayHoursData"
                 android:layout_width="0dp"
-                android:layout_height="130dp"
+                android:layout_height="140dp"
                 android:layout_marginTop="10dp"
                 android:layoutDirection="locale"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -43,6 +44,7 @@
                 android:id="@+id/textViewCity"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/city_name_back"
                 android:drawableStart="@drawable/gps_white_24dp"
                 android:gravity="center_vertical"
@@ -64,7 +66,7 @@
                 android:layoutDirection="locale"
                 android:text="Loading..."
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="italic"
                 app:layout_constraintEnd_toEndOf="@+id/textViewCity"
@@ -96,8 +98,7 @@
                 app:layout_constraintTop_toTopOf="@+id/lottieAnimationViewWindSpeed"
                 app:lottie_autoPlay="true"
                 app:lottie_fileName="humidity.json"
-                app:lottie_loop="true"
-                />
+                app:lottie_loop="true" />
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/lottieAnimationViewClouds"
@@ -108,8 +109,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textViewWindSpeed"
                 app:lottie_autoPlay="true"
                 app:lottie_fileName="clouds.json"
-                app:lottie_loop="true"
-                />
+                app:lottie_loop="true" />
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/lottieAnimationViewPressure"
@@ -120,8 +120,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textViewHumidity"
                 app:lottie_autoPlay="true"
                 app:lottie_fileName="pressure.json"
-                app:lottie_loop="true"
-                />
+                app:lottie_loop="true" />
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/lottieAnimationViewWindSpeed"
@@ -135,8 +134,7 @@
                 app:layout_constraintTop_toTopOf="@+id/textViewDescription"
                 app:lottie_autoPlay="true"
                 app:lottie_fileName="wind_speed.json"
-                app:lottie_loop="true"
-                />
+                app:lottie_loop="true" />
 
             <TextView
                 android:id="@+id/textViewCityTempreture"

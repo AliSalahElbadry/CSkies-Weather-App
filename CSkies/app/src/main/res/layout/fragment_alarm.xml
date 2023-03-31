@@ -11,33 +11,32 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="35dp">
 
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="37dp"
+            android:layout_height="25dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
             android:src="@mipmap/ic_launcher" />
 
         <TextView
-            android:id="@+id/textView11"
-            android:layout_width="149dp"
+            android:id="@+id/textViewTitle"
+            android:layout_width="335dp"
             android:layout_height="35dp"
-            android:layout_marginStart="80dp"
-            android:text="@string/app_name"
-            android:textAlignment="center"
-            android:textColor="#03A9F4"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:text="@string/weather_alarm"
+            android:textColor="#FFFFFF"
             android:textSize="24sp"
-            android:textStyle="bold|italic" />
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imageView3"
-            android:layout_width="56dp"
-            android:layout_height="49dp"
-            android:layout_marginStart="75dp"
+            android:layout_width="37dp"
+            android:layout_height="35dp"
             android:layout_marginTop="5dp"
             android:src="@drawable/notifications_alert" />
 
@@ -50,28 +49,30 @@
         android:orientation="horizontal"
         android:weightSum="3">
 
-        <TextView
-            android:id="@+id/textViewTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="@string/weather_alarm"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textViewMessage"
-        android:layout_width="match_parent"
-        android:layout_height="121dp"
+        android:id="@+id/textViewMssg"
+        android:layout_width="339dp"
+        android:layout_height="56dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="10dp"
         android:text="fdhgfhg"
         android:textColor="@color/white"
         android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/button_close"
+        android:layout_width="171dp"
+        android:layout_height="35dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/btn_don_setting_back"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/close"
+        android:textColor="#EFEDED"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
 </LinearLayout>

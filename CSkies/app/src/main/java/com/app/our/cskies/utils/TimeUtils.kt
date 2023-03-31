@@ -16,14 +16,9 @@ object TimeUtils {
         val formatter = SimpleDateFormat("dd-MM-yyyy", Locale(Setting.getLang()))
         return formatter.format(date)
     }
-    fun formatDateAlert(dt:Long):String{
-        val date= Date(dt )
-        val sdf = SimpleDateFormat("dd-MM-yyyy")
-        return sdf.format(date)
-    }
-    fun formatTimeAlert(dt:Long):String{
+    fun getDateTimeAlert(dt:Long):String{
         val date = Date(dt)
-        val sdf = SimpleDateFormat("HH:mm")
+        val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm aa")
         return sdf.format(date)
     }
 

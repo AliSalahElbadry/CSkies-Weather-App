@@ -30,7 +30,7 @@
                 android:layout_marginStart="10dp"
                 android:button="@android:drawable/btn_radio"
                 android:text="@string/english"
-                android:textColor="#0C4573"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -41,7 +41,7 @@
                 android:layout_marginStart="60dp"
                 android:button="@android:drawable/btn_radio"
                 android:text="@string/arabic"
-                android:textColor="#0C4573"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </RadioGroup>
@@ -51,7 +51,7 @@
             android:layout_width="411dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/home_back_week_days"
+            android:background="@android:drawable/editbox_dropdown_dark_frame"
             android:gravity="center_horizontal|center_vertical"
             android:text="@string/language"
             android:textAlignment="gravity"
@@ -83,7 +83,7 @@
                 android:layout_marginStart="20dp"
                 android:button="@android:drawable/btn_radio"
                 android:text="@string/m_s"
-                android:textColor="#0C4573"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -94,7 +94,7 @@
                 android:layout_marginStart="70dp"
                 android:button="@android:drawable/btn_radio"
                 android:text="@string/mile_h"
-                android:textColor="#0C4573"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </RadioGroup>
@@ -104,7 +104,7 @@
             android:layout_width="411dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/home_back_week_days"
+            android:background="@android:drawable/editbox_dropdown_dark_frame"
             android:gravity="center_horizontal|center_vertical"
             android:text="@string/wind_speed"
             android:textAlignment="gravity"
@@ -135,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:button="@android:drawable/btn_radio"
                 android:text="@string/fehrienhit"
-                android:textColor="#0C4573"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -146,7 +146,7 @@
                 android:layout_marginStart="5dp"
                 android:button="@android:drawable/btn_radio"
                 android:text="@string/celisus"
-                android:textColor="#0C4573"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -157,7 +157,7 @@
                 android:layout_marginStart="5dp"
                 android:button="@android:drawable/btn_radio"
                 android:text="@string/kelven"
-                android:textColor="#0C4573"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </RadioGroup>
@@ -167,7 +167,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/home_back_week_days"
+            android:background="@android:drawable/editbox_dropdown_dark_frame"
             android:gravity="center_horizontal|center_vertical"
             android:text="@string/temperature"
             android:textAlignment="gravity"
@@ -198,7 +198,7 @@
                 android:layout_height="wrap_content"
                 android:button="@android:drawable/btn_radio"
                 android:text="@string/alerts"
-                android:textColor="#0C4573"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -209,7 +209,7 @@
                 android:layout_marginStart="60dp"
                 android:button="@android:drawable/btn_radio"
                 android:text="@string/off"
-                android:textColor="#0C4573"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </RadioGroup>
@@ -219,7 +219,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/home_back_week_days"
+            android:background="@android:drawable/editbox_dropdown_dark_frame"
             android:gravity="center_horizontal|center_vertical"
             android:text="@string/notification"
             android:textAlignment="gravity"
@@ -235,7 +235,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@drawable/home_back_week_days"
+            android:background="@android:drawable/editbox_dropdown_dark_frame"
             android:gravity="center_horizontal|center_vertical"
             android:text="@string/location_method"
             android:textAlignment="gravity"
@@ -266,7 +266,7 @@
                 android:layout_marginStart="20dp"
                 android:button="@android:drawable/btn_radio"
                 android:text="@string/map"
-                android:textColor="#0C4573"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -277,15 +277,15 @@
                 android:layout_marginStart="70dp"
                 android:button="@android:drawable/btn_radio"
                 android:text="@string/gps"
-                android:textColor="#0C4573"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </RadioGroup>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonApplyChange"
-            android:layout_width="162dp"
-            android:layout_height="68dp"
+            android:layout_width="166dp"
+            android:layout_height="53dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/btn_don_setting_back"
             android:text="@string/apply_changes"

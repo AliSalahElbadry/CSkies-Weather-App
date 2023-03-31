@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,10 +20,10 @@ import com.app.our.cskies.LocationGetter.FragmentLocationDetector
 import com.app.our.cskies.R
 import com.app.our.cskies.Repository.Repository
 import com.app.our.cskies.alerts.utils.AlarmUtils
+import com.app.our.cskies.alerts.viewmodel.AlertViewModelFactory
 import com.app.our.cskies.alerts.viewmodel.AlertsViewModel
 import com.app.our.cskies.databinding.FragmentAlertsPageBinding
 import com.app.our.cskies.dp.model.Alert
-import com.app.our.cskies.home.viewModel.ViewModelHome
 import com.app.our.cskies.utils.Dialogs
 import com.app.our.cskies.utils.Setting
 import com.app.our.cskies.utils.UserStates
@@ -32,8 +33,9 @@ import kotlinx.coroutines.launch
 class FragmentAlertsPage : Fragment(),OnClickDeleteAlert{
     var isLocationMapSet: Boolean=false
     lateinit var  binding:FragmentAlertsPageBinding
-    lateinit var alertsViewModel: AlertsViewModel
+    private lateinit var alertsViewModel: AlertsViewModel
     lateinit var adapter: AlertsAdapter
+    lateinit var  factory:AlertViewModelFactory
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,10 +49,13 @@ class FragmentAlertsPage : Fragment(),OnClickDeleteAlert{
         adapter= AlertsAdapter(listOf(),this)
         binding.recyclerView.layoutManager=LinearLayoutManager(this.context)
         binding.recyclerView.adapter=adapter
-        alertsViewModel= AlertsViewModel(Repository.getInstance(requireActivity().applicationContext))
-        alertsViewModel.setTitle(3)
+        //factory= AlertViewModelFactory(Repository.getInstance(requireContext()))
+      //  alertsViewModel=ViewModelProvider(this,factory)[AlertsViewModel::class.java]
+        alertsViewModel=AlertsViewModel(Repository.getInstance(requireContext()))
+        alertsViewModel.getAllAlerts()
         lifecycleScope.launch {
             alertsViewModel.alertSetter.observe(viewLifecycleOwner, Observer {
+                Log.e("","Added............page")
                 if(it.getId()!=null) {
                     AlarmUtils.setAlarm(requireContext(), it)
                     Dialogs.SnakeToast(
@@ -61,6 +66,11 @@ class FragmentAlertsPage : Fragment(),OnClickDeleteAlert{
             })
         }
         alertsViewModel.alerts.observe(viewLifecycleOwner, Observer {
+            if(it.isNotEmpty()){
+                binding.imageView.visibility=View.GONE
+            }else{
+                binding.imageView.visibility=View.VISIBLE
+            }
             adapter.alerts=it
             adapter.notifyDataSetChanged()
         })
@@ -79,8 +89,8 @@ class FragmentAlertsPage : Fragment(),OnClickDeleteAlert{
         if(isLocationMapSet)
         {
             val fragmentListOfAlerts=FragmentListOfAlerts()
-            fragmentListOfAlerts.viewModel=alertsViewModel
             fragmentListOfAlerts.isCancelable=false
+            fragmentListOfAlerts.viewModel=alertsViewModel
             fragmentListOfAlerts.show(requireActivity().supportFragmentManager,null)
         }
     }
@@ -121,13 +131,13 @@ class FragmentAlertsPage : Fragment(),OnClickDeleteAlert{
             Dialogs.SnakeToast(binding.root,if(Setting.getLang()=="en")"Please Check Your Connection" else "تأكد من اتصال الانترنت")
         }
     }
-
     override fun onClick(alert: Alert) {
         val builder= Dialogs.getAletDialogBuilder(binding.root.context,"Alert !!","Do You Want really to Delete Location ?")
         builder.setPositiveButton("No"){ dialogInterface, _ ->
             dialogInterface.dismiss()
         }
         builder.setNegativeButton("Yes"){ _, _ ->
+            AlarmUtils.canelAlarm(requireContext(),alert)
             alertsViewModel.deleteAlert(alert)
         }
         val alertDialog: AlertDialog = builder.create()

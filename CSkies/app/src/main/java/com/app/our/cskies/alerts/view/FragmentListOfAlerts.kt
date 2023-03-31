@@ -8,7 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProvider
 import com.app.our.cskies.R
+import com.app.our.cskies.Repository.Repository
+import com.app.our.cskies.alerts.viewmodel.AlertViewModelFactory
 import com.app.our.cskies.alerts.viewmodel.AlertsViewModel
 import com.app.our.cskies.databinding.AlertItemBinding
 import com.app.our.cskies.databinding.FragmentListOfAlertsBinding
@@ -45,8 +48,8 @@ class FragmentListOfAlerts : DialogFragment() {
                     binding.checkBoxPress.isChecked
                 )
                 val fragmentAlertToFromDates = FragmentAlertToFromDates()
-                fragmentAlertToFromDates.viewModel = viewModel
                 fragmentAlertToFromDates.isCancelable = false
+                fragmentAlertToFromDates.viewModel=viewModel
                 fragmentAlertToFromDates.show(requireActivity().supportFragmentManager, null)
                 dismiss()
             }
