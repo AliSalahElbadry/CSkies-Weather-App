@@ -1,13 +1,11 @@
 package com.app.our.cskies.dp
 
-import androidx.room.Query
 import com.app.our.cskies.dp.model.Alert
 import com.app.our.cskies.dp.model.DayWeather
 import com.app.our.cskies.dp.model.HourWeather
 import com.app.our.cskies.dp.model.Location
 import com.app.our.cskies.model.LocationData
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 
 interface LocalDataSource {
 

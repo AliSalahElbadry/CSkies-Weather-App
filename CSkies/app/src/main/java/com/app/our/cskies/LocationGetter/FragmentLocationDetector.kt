@@ -237,10 +237,11 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener  {
                 fusedLocationProviderClient.removeLocationUpdates(this)
                 loadingAnim.cancelAnimation()
                 loadingAnim.visibility = View.GONE
-                if (!isSetting) {
+                if (!isSetting&&!myLocation&&!isFavorite&&!isAlert) {
                     (requireActivity() as SplashCall).showHome()
                 } else {
                     if (myLocation) {
+                        myLocation=false
                         imageButtonMyLocation.visibility = View.VISIBLE
                         val cameraUpdate =
                             CameraUpdateFactory.newLatLngZoom(LatLng(latitude!!, longtude!!), 10F)

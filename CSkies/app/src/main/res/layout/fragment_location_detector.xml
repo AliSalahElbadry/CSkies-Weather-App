@@ -18,11 +18,11 @@
         android:id="@+id/imageButtonMapConfirm"
         android:layout_width="86dp"
         android:layout_height="84dp"
-        android:layout_gravity="bottom"
+        android:layout_gravity="bottom|start"
         android:layout_marginStart="10dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/map_done_back"
-        android:scaleType="fitXY"
+        android:background="@drawable/back_transparent"
+        android:scaleType="fitCenter"
         android:src="@drawable/confirm" />
 
     <ImageButton
