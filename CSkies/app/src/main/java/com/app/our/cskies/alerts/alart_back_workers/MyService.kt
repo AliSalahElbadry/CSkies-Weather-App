@@ -5,11 +5,20 @@ import android.app.*
 import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.Context
 import android.content.Intent
+import android.graphics.PixelFormat
+import android.icu.text.SimpleDateFormat
+import android.icu.util.Calendar
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
 import android.os.IBinder
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.WindowManager
+import android.widget.Button
 import android.widget.RemoteViews
+import android.widget.TextView
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.app.our.cskies.R
@@ -51,7 +60,7 @@ class MyService : Service() {
                                 }"
                                 msg += "\nAlerts: \n"
                                 data.alerts.forEach {
-                                    msg += "Event: $it.event :\t"
+                                    msg += "Event: ${it.event} :\t"
                                     msg += "Description: ${it.description}\n"
                                 }
                                 withContext(Dispatchers.Main) {
@@ -82,12 +91,18 @@ class MyService : Service() {
                     }
                 }
             }
+        }else{
+                showAlarmOrNotification(
+                    if (Setting.getLang() == "en")
+                        "There Is No Weather Alerts In ${alert.address} for Today"
+                    else
+                        "لا يوجد تنبيهات طقس  ${alert.address}اليوم ",
+                    alert.type
+                )
         }
         if (alert.numOfDays > 0) {
             alert.numOfDays -= 1
-            CoroutineScope(Dispatchers.IO).launch {
-                repo.updateAlert(alert)
-            }
+            alert.fromDate=(alert.fromDate.toLong()+86400000).toString()
             AlarmUtils.setAlarm(applicationContext, alert)
         } else {
             CoroutineScope(Dispatchers.IO).launch {
@@ -101,7 +116,6 @@ class MyService : Service() {
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
-
 
     private fun createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
@@ -125,28 +139,29 @@ class MyService : Service() {
     @SuppressLint("MissingPermission")
     private fun showAlarmOrNotification(msg: String, type: Int) {
         if (type == 0) {
-            createNotificationChannel()
-            CoroutineScope(Dispatchers.Default).launch {
-                createNotificationChannel()
-                val intent=Intent(this@MyService,CloseHundleReciever::class.java).putExtra("NOTIFICATION_ID",notificationId)
-                val pendingIntent=PendingIntent.getBroadcast(this@MyService,0,intent,FLAG_IMMUTABLE)
-                val remoteViews = RemoteViews(this@MyService.packageName, R.layout.fragment_alarm)
-                remoteViews.setTextViewText(R.id.textViewMssg, msg)
-                remoteViews.setOnClickPendingIntent(R.id.textViewMssg,pendingIntent)
-                //var action=NotificationCompat.Action()
-
-                val builder = NotificationCompat.Builder(this@MyService, CHANNEL_ID)
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setCustomContentView(remoteViews)
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setCategory(Notification.CATEGORY_ALARM)
-                    .setSound(Uri.parse("android.resource://" + this@MyService.packageName + "/" + R.raw.alarm))
-                    //.addAction(0,"action",pendingIntent)
-                    .setStyle(NotificationCompat.InboxStyle())
-                    .build()
-                 //builder.flags.xor(Notification.FLAG_INSISTENT)
-                NotificationManagerCompat.from(this@MyService).notify(notificationId, builder)
+            val player=MediaPlayer.create(this@MyService,R.raw.alarm)
+            player.isLooping=true
+            val alarmLayout=LayoutInflater.from(this@MyService).inflate(R.layout.fragment_alarm,null)
+            val messageHolder=alarmLayout.findViewById<TextView>(R.id.textViewMssg)
+            messageHolder.text=msg
+            val btnClose=alarmLayout.findViewById<Button>(R.id.button_close)
+            btnClose.setOnClickListener{
+                player.stop()
+                alarmLayout.visibility=View.GONE
             }
+            val windowManager=this.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            val layoutParams=WindowManager.LayoutParams(
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O)
+                                                            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+                                                        else WindowManager.LayoutParams.TYPE_PHONE,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,PixelFormat.TRANSLUCENT
+            )
+            layoutParams.gravity=Gravity.TOP xor Gravity.CENTER
+
+            windowManager.addView(alarmLayout,layoutParams)
+            player.start()
+            alarmLayout.visibility=View.VISIBLE
         } else {
             createNotificationChannel()
             val remoteViews = RemoteViews(this@MyService.packageName, R.layout.fragment_alarma)
