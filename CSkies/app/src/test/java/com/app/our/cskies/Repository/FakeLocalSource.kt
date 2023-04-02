@@ -32,9 +32,14 @@ class FakeLocalSource(
     }
 
     override suspend fun deleteLocation(location: Location) {
-        locations.removeIf {
-            it.address==location.address
+        val res= mutableListOf<Location>()
+        locations.forEach {
+            if(it.address!=location.address)
+            {
+                res.add(it)
+            }
         }
+        locations=res
     }
 
     override suspend fun deleteAlert(id: Int) {

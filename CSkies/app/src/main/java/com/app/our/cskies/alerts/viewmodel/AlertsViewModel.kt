@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.our.cskies.Repository.Repository
+import com.app.our.cskies.Repository.RepositoryInterface
 import com.app.our.cskies.dp.model.Alert
 import com.app.our.cskies.utils.UserCurrentLocation
 import kotlinx.coroutines.Dispatchers
@@ -13,13 +14,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
 
-class AlertsViewModel(val repository: Repository) :ViewModel(){
+class AlertsViewModel(val repository: RepositoryInterface) :ViewModel(){
     private var _alertSetter= MutableLiveData<Alert>()
     var alertSetter:LiveData<Alert> =_alertSetter
 
     private var _alerts= MutableLiveData<List<Alert>>()
     val alerts:LiveData<List<Alert>> = _alerts
-    private var newAlert: Alert=Alert("","",false,false,false,false,false,"","","",0)
+    var newAlert: Alert=Alert("","",false,false,false,false,false,"","","",0)
     fun insertAlert(alert: Alert){
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertAlert(alert)

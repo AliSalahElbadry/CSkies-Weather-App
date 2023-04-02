@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.our.cskies.Repository.Repository
+import com.app.our.cskies.Repository.RepositoryInterface
 import com.app.our.cskies.dp.model.Location
 import com.app.our.cskies.model.LocationData
 import com.app.our.cskies.network.ApiState
@@ -16,7 +17,7 @@ import com.app.our.cskies.weather_data_show.viewmodel.FactoryTransformer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class FavoritesViewModel(private val repoClass:Repository):ViewModel() {
+class FavoritesViewModel(private val repoClass:RepositoryInterface):ViewModel() {
 
     private var _allFavorites=MutableLiveData<List<Location>>()
     val liveData: LiveData<List<Location>> = _allFavorites

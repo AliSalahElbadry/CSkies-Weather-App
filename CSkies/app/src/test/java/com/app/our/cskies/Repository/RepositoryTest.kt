@@ -111,7 +111,7 @@ class RepositoryTest {
 
 
     @Test
-    fun Location_InsertCheckInserted() = mainRule.runBlockingTest{
+    fun insertLocation_InsertCheckInserted() = mainRule.runBlockingTest{
         launch {
             repository.insertLocation(
                 LocationData(
@@ -130,7 +130,7 @@ class RepositoryTest {
     }
 
     @Test
-    fun Alert_InsertCheckInserted() = mainRule.runBlockingTest{
+    fun insertAlert_InsertCheckInserted() = mainRule.runBlockingTest{
         val alert=com.app.our.cskies.dp.model.Alert("","",false,false,false,false,false,"11","123","123",10)
         launch {
             repository.insertAlert(
@@ -142,7 +142,7 @@ class RepositoryTest {
             }
     }
     @Test
-    fun Location_GetcheckTrue_returnListOfFavorites() = mainRule.runBlockingTest{
+    fun getFavoriteLocations_GetcheckTrue_returnListOfFavorites() = mainRule.runBlockingTest{
         launch {
             repeat(10)
             {
@@ -161,7 +161,7 @@ class RepositoryTest {
     }
 
     @Test
-    fun Location_GetCheckTrue_returnListOfDays_returnLocationDays() = mainRule.runBlockingTest{
+    fun selectDaysOfLocation_GetCheckTrue_returnListOfDays_returnLocationDays() = mainRule.runBlockingTest{
         launch {
             repository.insertLocation(LocationData(location,days,hours))
         }.join()
@@ -173,7 +173,7 @@ class RepositoryTest {
     }
 
     @Test
-    fun Location_GetCheckTrue_returnListOfHours_returnLocationHours()=mainRule.runBlockingTest{
+    fun selectHoursOfLocation_GetCheckTrue_returnListOfHours_returnLocationHours()=mainRule.runBlockingTest{
         launch {
             repository.insertLocation(LocationData(location,days,hours))
         }.join()
@@ -185,7 +185,7 @@ class RepositoryTest {
     }
 
     @Test
-    fun LocationgetCurrentCeckTrue_returnCurrentLocation() =mainRule.runBlockingTest{
+    fun getCurrentLocationCeckTrue_returnCurrentLocation() =mainRule.runBlockingTest{
         launch {
             repository.insertLocation(LocationData(location.apply { isCurrent=true },days,hours))
         }.join()
@@ -197,7 +197,7 @@ class RepositoryTest {
     }
 
     @Test
-    fun ListOfAlertsgetCheckTrue_returnListAlerts() =mainRule.runBlockingTest{
+    fun getListOfAlertsCheckTrue_returnListAlerts() =mainRule.runBlockingTest{
 
         launch {
             repeat(10) {
@@ -228,7 +228,7 @@ class RepositoryTest {
 
 
     @Test
-    fun Alert_UpdateCeckTrue()= runTest{
+    fun updateAlertCeckTrue()= runTest{
         val alert= com.app.our.cskies.dp.model.Alert(
             "23345656",
             "36565555",
