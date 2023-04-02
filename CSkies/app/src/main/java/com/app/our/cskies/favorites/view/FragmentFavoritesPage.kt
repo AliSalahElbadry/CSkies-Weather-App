@@ -13,7 +13,6 @@ import com.app.our.cskies.LocationGetter.FragmentLocationDetector
 import com.app.our.cskies.R
 import com.app.our.cskies.Repository.Repository
 import com.app.our.cskies.databinding.FragmentFavoritesPageBinding
-import com.app.our.cskies.dp.LocalDataSource
 import com.app.our.cskies.dp.LocalSourceImpl
 import com.app.our.cskies.dp.model.Location
 import com.app.our.cskies.favorites.viewmodel.FavoritesViewModel

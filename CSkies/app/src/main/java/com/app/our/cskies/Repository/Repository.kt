@@ -10,11 +10,10 @@ import com.app.our.cskies.network.ApiState
 import com.app.our.cskies.network.RemoteSource
 import com.app.our.cskies.network.RemoteSourceImpl
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 
 
-class Repository private constructor( val localDataSource:LocalDataSource,val remoteSource: RemoteSourceImpl): RepositoryInterface {
+class Repository private constructor( val localDataSource:LocalDataSource,val remoteSource: RemoteSource): RepositoryInterface {
 
     override suspend fun getWeatherData(
         latitude: String,
@@ -77,11 +76,12 @@ class Repository private constructor( val localDataSource:LocalDataSource,val re
 
     companion object{
         private var repository: Repository?=null
-        fun getInstance( localDataSource:LocalDataSource,remoteSource: RemoteSourceImpl): Repository
+        fun getInstance(localDataSource:LocalDataSource, remoteSource: RemoteSource
+        ): Repository
         {
             if(repository ==null)
             {
-                repository = Repository(localDataSource,remoteSource)
+                repository = Repository(localDataSource, remoteSource)
             }
             return repository!!
         }

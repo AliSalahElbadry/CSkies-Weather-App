@@ -8,6 +8,7 @@ class ConverterTest {
 
     @Test
     fun getImageUrl_returnImageUrl() {
+        val url=Converter.getImageUrl("10d")
 
     }
 

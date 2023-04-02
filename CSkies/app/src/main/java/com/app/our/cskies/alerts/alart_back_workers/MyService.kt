@@ -2,14 +2,10 @@ package com.app.our.cskies.alerts.alart_back_workers
 
 import android.annotation.SuppressLint
 import android.app.*
-import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.Context
 import android.content.Intent
 import android.graphics.PixelFormat
-import android.icu.text.SimpleDateFormat
-import android.icu.util.Calendar
 import android.media.MediaPlayer
-import android.net.Uri
 import android.os.Build
 import android.os.IBinder
 import android.view.Gravity
@@ -24,7 +20,6 @@ import androidx.core.app.NotificationManagerCompat
 import com.app.our.cskies.R
 import com.app.our.cskies.Repository.Repository
 import com.app.our.cskies.alerts.utils.AlarmUtils
-import com.app.our.cskies.dp.LocalDataSource
 import com.app.our.cskies.dp.LocalSourceImpl
 import com.app.our.cskies.dp.model.Alert
 import com.app.our.cskies.network.ApiState

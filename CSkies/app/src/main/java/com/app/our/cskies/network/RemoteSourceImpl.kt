@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.flow
 import java.io.IOException
 import java.net.ConnectException
 
-class RemoteSourceImpl private constructor():RemoteSource {
+ class RemoteSourceImpl private constructor():RemoteSource {
     override suspend fun getWeatherData(
         latitude: String,
         longitude: String,
