@@ -38,7 +38,7 @@ class MyService : Service() {
         val repo = Repository.getInstance(LocalSourceImpl.getInstance(this), RemoteSourceImpl.getInstance()!!)
         if (UserStates.checkConnectionState(this)) {
             CoroutineScope(Dispatchers.IO).launch {
-                repo.getWeatherData("40.847807", "74.574725", lang = Setting.getLang()).collect { apiState ->
+                repo.getWeatherData(alert.lat, alert.lon, lang = Setting.getLang()).collect { apiState ->
                     when (apiState) {
                         is ApiState.Success -> {
                             if (apiState.locationData.alerts != null) {
@@ -69,7 +69,7 @@ class MyService : Service() {
                                 withContext(Dispatchers.Main) {
                                     showAlarmOrNotification(
                                         if (Setting.getLang() == "en")
-                                            "There Is No Weather Alerts In ${alert.address} for Today                       0                 0                    0"
+                                            "There Is No Weather Alerts In ${alert.address} for Today"
                                         else
                                             "لا يوجد تنبيهات طقس  ${alert.address} اليوم ",
                                         alert.type
@@ -78,10 +78,17 @@ class MyService : Service() {
                             }
                         }
                         is ApiState.Failure -> {
-
+                            withContext(Dispatchers.Main) {
+                                showAlarmOrNotification(
+                                    if (Setting.getLang() == "en")
+                                        "There Is No Weather Alerts In ${alert.address} for Today"
+                                    else
+                                        "لا يوجد تنبيهات طقس  ${alert.address} اليوم ",
+                                    alert.type
+                                )
+                            }
                         }
                         else -> {
-
                         }
                     }
                 }
