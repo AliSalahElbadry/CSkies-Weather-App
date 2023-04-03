@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.airbnb.lottie.LottieAnimationView
 import com.app.our.cskies.home.view.ActivityMain
@@ -21,6 +23,10 @@ class ActivitySplash : AppCompatActivity(), SplashCall {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+        val windowInsetsController = WindowCompat.getInsetsController(
+            window, window.decorView
+        )
+        windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
         supportActionBar?.hide()
         lottieAnimationView = findViewById(R.id.splash_anim)
         lottieAnimationView.playAnimation()

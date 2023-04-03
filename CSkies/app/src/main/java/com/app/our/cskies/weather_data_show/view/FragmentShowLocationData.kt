@@ -6,8 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.lottie.LottieAnimationView
 import com.app.our.cskies.R
@@ -20,6 +23,8 @@ import com.app.our.cskies.network.RemoteSourceImpl
 import com.app.our.cskies.utils.*
 import com.app.our.cskies.weather_data_show.viewmodel.LocationDataViewModel
 import com.app.our.cskies.weather_data_show.viewmodel.LocationDataViewModelFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class FragmentShowLocationData : Fragment() {
@@ -45,7 +50,6 @@ class FragmentShowLocationData : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadingAnim=view.findViewById(R.id.loadingAnimHome)
-        loadingAnim.playAnimation()
         binding.pullToRefresh.visibility=View.INVISIBLE
         factory = LocationDataViewModelFactory(Repository.getInstance(
             LocalSourceImpl.getInstance(requireActivity().applicationContext),
@@ -60,10 +64,18 @@ class FragmentShowLocationData : Fragment() {
                 this.orientation = LinearLayoutManager.HORIZONTAL
             }
         binding.pullToRefresh.setOnRefreshListener {
-            if(UserStates.checkConnectionState(requireActivity()))
-            locationDataViewModel.getAllFromNetwork(requireContext(),true, isFavorite = false)
-            else{
-                locationDataViewModel.getCurrentLocation()
+            if(mode==0) {
+                if (UserStates.checkConnectionState(requireActivity()))
+                    locationDataViewModel.getAllFromNetwork(
+                        requireContext(),
+                        true,
+                        isFavorite = false
+                    )
+                else {
+                    locationDataViewModel.getCurrentLocation()
+                }
+            }else{
+                binding.pullToRefresh.isRefreshing=false
             }
         }
         binding.recyclerViewdayHoursData.adapter = hoursAdapter
@@ -85,30 +97,28 @@ class FragmentShowLocationData : Fragment() {
                 }else{
                     locationDataViewModel.getCurrentLocation()
                 }
-                    locationDataViewModel.liveData.observe(viewLifecycleOwner) {
-                        when (it) {
-                            is ApiState.TransformedState -> {
-                                loadingAnim.cancelAnimation()
-                                loadingAnim.visibility=View.GONE
-                                binding.pullToRefresh.visibility=View.VISIBLE
-                                binding.pullToRefresh.isRefreshing = false
-                                data = it.locationData
-                                hoursAdapter.hours = data.hours
-                                daysAdapter.daily = data.days
-                                hoursAdapter.notifyDataSetChanged()
-                                daysAdapter.notifyDataSetChanged()
-                                showData()
-                            }
-                            is ApiState.Failure -> {
+                   lifecycleScope.launch {
+                       locationDataViewModel.stateFlow.collect {
+                           if (it is ApiState.TransformedState){
+                                   loadingAnim.cancelAnimation()
+                                   loadingAnim.visibility = View.GONE
+                                   binding.pullToRefresh.visibility = View.VISIBLE
+                                   binding.pullToRefresh.isRefreshing = false
+                                   data = it.locationData
+                                   hoursAdapter.hours = data.hours
+                                   daysAdapter.daily = data.days
+                                   hoursAdapter.notifyDataSetChanged()
+                                   daysAdapter.notifyDataSetChanged()
+                                   showData()
+                               }else if(it  is ApiState.Failure)  {
 
-                                Dialogs.SnakeToast(binding.root, it.message)
-                            }
-                            else -> {
-                                Dialogs.SnakeToast(binding.root, (it as ApiState.Loading).message)
-                            }
-                        }
-                    }
-
+                                   Toast.makeText(requireContext(), it.message,Toast.LENGTH_LONG).show()
+                               }
+                               else if(it is ApiState.Loading) {
+                                  loadingAnim.playAnimation()
+                               }
+                           }
+                       }
             }
             2 -> {
                 //favorite item

@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#1F5178"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:theme="@style/Theme.AppCompat"
-    tools:context=".alerts.view.AlarmFragment">
+    android:theme="@style/Theme.AppCompat">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="35dp">
+        android:layout_height="35dp"
+        android:gravity="center_horizontal">
 
 
         <ImageView
@@ -24,7 +25,7 @@
 
         <TextView
             android:id="@+id/textViewTitle"
-            android:layout_width="335dp"
+            android:layout_width="273dp"
             android:layout_height="35dp"
             android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal"
@@ -53,15 +54,25 @@
 
     <TextView
         android:id="@+id/textViewMess"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:editable="false"
+        android:fontFamily="serif"
+        android:gravity="clip_vertical"
+        android:lineSpacingExtra="10sp"
+        android:nestedScrollingEnabled="true"
+        android:overScrollMode="ifContentScrolls"
         android:padding="10dp"
-        android:text="fdhgfhg"
+        android:paddingTop="5dp"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbars="vertical"
+        android:text="Text View"
+        android:textAlignment="gravity"
         android:textColor="@color/white"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textStyle="bold|italic"
+        android:verticalScrollbarPosition="defaultPosition" />
 
 </LinearLayout>

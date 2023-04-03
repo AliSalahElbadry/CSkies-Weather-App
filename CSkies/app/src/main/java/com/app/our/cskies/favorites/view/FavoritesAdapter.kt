@@ -29,7 +29,6 @@ class FavoritesAdapter  (var locations:MutableList<Location>, private val listen
         holder.binding.textViewCityFavoriteItem.text=locations[position].address
         holder.binding.cardViewFavoriteItem.setOnClickListener {
             listener.onClick(locations[holder.adapterPosition])
-            Log.e("","Clicked")
         }
         holder.binding.imgBtnFavoriteItem.setOnClickListener{
            val builder= Dialogs.getAletDialogBuilder(binding.root.context,"Alert !!","Do You Want really to Delete Location ?")

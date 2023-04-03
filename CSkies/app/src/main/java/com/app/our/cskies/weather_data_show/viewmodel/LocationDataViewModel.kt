@@ -11,12 +11,15 @@ import com.app.our.cskies.utils.Setting
 import com.app.our.cskies.utils.UserCurrentLocation
 import com.app.our.cskies.network.ApiState
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LocationDataViewModel(private val repoClass: Repository):ViewModel() {
 
-   private var _liveData=MutableLiveData<ApiState>()
-    val liveData: LiveData<ApiState> = _liveData
+   private var _stateFlow= MutableStateFlow<ApiState>(ApiState.Loading())
+    val stateFlow: StateFlow<ApiState> = _stateFlow
     fun getAllFromNetwork(context:Context,isCurrent:Boolean,isFavorite:Boolean) {
         val lat= UserCurrentLocation.latitude?:""
         val lon= UserCurrentLocation.longitude?:""
@@ -32,16 +35,22 @@ class LocationDataViewModel(private val repoClass: Repository):ViewModel() {
                                if(num==33)
                                {
                                    val data=factory.getLocationData()
-                                   _liveData.postValue(ApiState.TransformedState(data))
+                                   withContext(Dispatchers.Main) {
+                                       _stateFlow.value = ApiState.TransformedState(data)
+                                   }
                                    insertLocation(data)
                                }
                            }
                       }
                       is ApiState.Failure-> {
-                          _liveData.postValue(it)
+                          withContext(Dispatchers.Main) {
+                              _stateFlow.value = it
+                          }
                       }
                       else ->{
-                          _liveData.postValue(it)
+                          withContext(Dispatchers.Main) {
+                              _stateFlow.value = it
+                          }
                       }
                     }
                 }
@@ -61,7 +70,9 @@ class LocationDataViewModel(private val repoClass: Repository):ViewModel() {
                     locationData.hours=hours
                     repoClass.selectDaysOfLocation(it.address).collect{days->
                         locationData.days=days
-                        _liveData.postValue(ApiState.TransformedState(locationData))
+                        withContext(Dispatchers.Main) {
+                            _stateFlow.value = ApiState.TransformedState(locationData)
+                        }
                     }
                 }
             }

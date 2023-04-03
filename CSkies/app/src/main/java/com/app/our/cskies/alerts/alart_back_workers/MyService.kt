@@ -38,25 +38,25 @@ class MyService : Service() {
         val repo = Repository.getInstance(LocalSourceImpl.getInstance(this), RemoteSourceImpl.getInstance()!!)
         if (UserStates.checkConnectionState(this)) {
             CoroutineScope(Dispatchers.IO).launch {
-                repo.getWeatherData(alert.lat, alert.lon).collect { apiState ->
+                repo.getWeatherData("40.847807", "74.574725", lang = Setting.getLang()).collect { apiState ->
                     when (apiState) {
                         is ApiState.Success -> {
                             if (apiState.locationData.alerts != null) {
                                 val data = apiState.locationData
                                 var msg = ""
-                                msg += "Latitude: ${data.lat}\nLongitude: ${data.lon}"
+                                msg += "${data.lat}\n${data.lon}"
                                 UserCurrentLocation.longitude = data.lon.toString()
                                 UserCurrentLocation.latitude = data.lat.toString()
-                                msg += "\nAddress: ${
+                                msg += "\n ${
                                     UserCurrentLocation.getAddress(
                                         this@MyService,
                                         false
                                     )
                                 }"
-                                msg += "\nAlerts: \n"
+                                msg += "\n"
                                 data.alerts.forEach {
-                                    msg += "Event: ${it.event} :\t"
-                                    msg += "Description: ${it.description}\n"
+                                    msg += "${it.event}\t"
+                                    msg += "${it.description}\n"
                                 }
                                 withContext(Dispatchers.Main) {
                                     showAlarmOrNotification(
@@ -69,9 +69,9 @@ class MyService : Service() {
                                 withContext(Dispatchers.Main) {
                                     showAlarmOrNotification(
                                         if (Setting.getLang() == "en")
-                                            "There Is No Weather Alerts In ${alert.address} for Today"
+                                            "There Is No Weather Alerts In ${alert.address} for Today                       0                 0                    0"
                                         else
-                                            "لا يوجد تنبيهات طقس  ${alert.address}اليوم ",
+                                            "لا يوجد تنبيهات طقس  ${alert.address} اليوم ",
                                         alert.type
                                     )
                                 }
@@ -113,8 +113,6 @@ class MyService : Service() {
     }
 
     private fun createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = getString(R.string.app_name)
             val descriptionText = getString(R.string.alarm)
@@ -159,15 +157,15 @@ class MyService : Service() {
             alarmLayout.visibility=View.VISIBLE
         } else {
             createNotificationChannel()
-            val remoteViews = RemoteViews(this@MyService.packageName, R.layout.fragment_alarma)
-            remoteViews.setTextViewText(R.id.textViewMess, msg)
+            val remoteViewsHead = RemoteViews(this@MyService.packageName, R.layout.notification_layout_head)
+            val remoteViewsContent = RemoteViews(this@MyService.packageName, R.layout.notification_layout_content)
+            remoteViewsContent.setTextViewText(R.id.textViewMess, msg)
             val builder = NotificationCompat.Builder(this@MyService, CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setCustomContentView(remoteViews)
-                .setDefaults(Notification.DEFAULT_ALL)
-                .setPriority(Notification.PRIORITY_HIGH)
-                .setCategory(Notification.CATEGORY_ALARM)
-                .setAutoCancel(true)
+                .setCustomHeadsUpContentView(remoteViewsHead)
+                .setCustomBigContentView(remoteViewsContent)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(false)
                 .build()
             NotificationManagerCompat.from(this@MyService).notify(notificationId, builder)
             val player = MediaPlayer.create(this@MyService, R.raw.notification)

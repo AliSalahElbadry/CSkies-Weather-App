@@ -1,11 +1,17 @@
 package com.app.our.cskies.home.view
 
 import android.graphics.Point
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.view.WindowInsets
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -30,7 +36,6 @@ class ActivityMain : AppCompatActivity(){
         setContentView(binding.root)
         setSupportActionBar(binding.myToolbar)
         val actionBar = supportActionBar
-
         actionBar!!.setHomeAsUpIndicator(R.drawable.baseline_menu_24)
         actionBar.title=resources.getString(R.string.home)
         actionBar.setDisplayShowHomeEnabled(true)
