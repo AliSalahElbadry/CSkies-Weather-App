@@ -25,7 +25,6 @@
             android:gravity="clip_vertical"
             android:lineSpacingExtra="10sp"
             android:nestedScrollingEnabled="true"
-            android:padding="10dp"
             android:paddingTop="5dp"
             android:text="Text View"
             android:textAlignment="gravity"

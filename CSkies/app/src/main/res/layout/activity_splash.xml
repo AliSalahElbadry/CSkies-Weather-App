@@ -5,6 +5,8 @@
     android:id="@+id/constarin_splash"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/clear"
+    android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
     tools:context=".splash.ActivitySplash">
 
     <com.airbnb.lottie.LottieAnimationView

@@ -23,16 +23,24 @@ import com.app.our.cskies.R
 import com.app.our.cskies.databinding.ActivityMainBinding
 import com.app.our.cskies.utils.LanguageUtils
 import com.app.our.cskies.utils.Setting
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ActivityMain : AppCompatActivity(){
     lateinit var binding:ActivityMainBinding
     var index=0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LanguageUtils.setAppLocale(Setting.getLang(),this)
+
         binding= ActivityMainBinding.inflate(layoutInflater)
+        val windowInsetsController = WindowCompat.getInsetsController(
+            window, window.decorView
+        )
+        windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
         setContentView(binding.root)
         setSupportActionBar(binding.myToolbar)
         val actionBar = supportActionBar

@@ -15,7 +15,7 @@
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
-        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -25,6 +25,8 @@
             android:name=".home.view.ActivityMain"
             android:exported="false"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:windowSoftInputMode="adjustResize"
             />
 
         <meta-data
@@ -36,6 +38,7 @@
         <activity
             android:name=".splash.ActivitySplash"
             android:exported="true" android:configChanges="orientation"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
