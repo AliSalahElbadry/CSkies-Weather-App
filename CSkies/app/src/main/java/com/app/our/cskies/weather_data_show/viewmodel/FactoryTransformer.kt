@@ -10,8 +10,12 @@ import com.app.our.cskies.model.LocationData
 import com.app.our.cskies.network.model.WeatherLocationData
 import com.app.our.cskies.utils.*
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 import java.sql.Time
 
 class FactoryTransformer(val context: Context) {
@@ -61,43 +65,69 @@ class FactoryTransformer(val context: Context) {
     }
     private fun dlownloadImages() {
 
-        Glide.with(context)
-            .asBitmap()
-            .load(data!!.location.icon).into(object : CustomTarget<Bitmap>(){
-                override fun onResourceReady(resource: Bitmap, transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?) {
-                    data!!.location.setImageBitmap(resource)
-                    numOfImages++
-                    stateFlow.value=numOfImages
-                }
-                override fun onLoadCleared(placeholder: Drawable?) {
+        CoroutineScope(Dispatchers.IO).launch {
+            launch {
+                Glide.with(context)
+                    .asBitmap()
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .load(data!!.location.icon).into(object : CustomTarget<Bitmap>() {
+                        override fun onResourceReady(
+                            resource: Bitmap,
+                            transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?
+                        ) {
+                            data!!.location.setImageBitmap(resource)
+                            numOfImages++
+                            stateFlow.value = numOfImages
+                        }
 
+                        override fun onLoadCleared(placeholder: Drawable?) {
+
+                        }
+                    })
+            }.join()
+            launch {
+                data!!.days.forEach {
+                    Glide.with(context)
+                        .asBitmap()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .load(it.icon).into(object : CustomTarget<Bitmap>() {
+                            override fun onResourceReady(
+                                resource: Bitmap,
+                                transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?
+                            ) {
+                                it.setImageBitmap(resource)
+                                numOfImages++
+                                stateFlow.value = numOfImages
+                            }
+
+                            override fun onLoadCleared(placeholder: Drawable?) {
+                            }
+                        })
                 }
-            })
-        data!!.days.forEach{
-            Glide.with(context)
-                .asBitmap()
-                .load(it.icon).into(object : CustomTarget<Bitmap>(){
-                    override fun onResourceReady(resource: Bitmap, transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?) {
-                        it.setImageBitmap(resource)
-                        numOfImages++
-                        stateFlow.value=numOfImages
-                    }
-                    override fun onLoadCleared(placeholder: Drawable?) {
-                    }
-                })
-        }
-        data!!.hours.forEach{
-            Glide.with(context)
-                .asBitmap()
-                .load(it.icon).into(object : CustomTarget<Bitmap>(){
-                    override fun onResourceReady(resource: Bitmap, transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?) {
-                        it.setImageBitmap(resource)
-                        numOfImages++
-                        stateFlow.value=numOfImages
-                    }
-                    override fun onLoadCleared(placeholder: Drawable?) {
-                    }
-                })
+            }.join()
+            launch {
+                data!!.hours.forEach {
+                    Glide.with(context)
+                        .asBitmap()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .load(it.icon).into(object : CustomTarget<Bitmap>() {
+                            override fun onResourceReady(
+                                resource: Bitmap,
+                                transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?
+                            ) {
+                                it.setImageBitmap(resource)
+                                numOfImages++
+                                stateFlow.value = numOfImages
+                            }
+
+                            override fun onLoadCleared(placeholder: Drawable?) {
+                            }
+                        })
+                }
+            }.join()
         }
     }
     fun getLocationData():LocationData{

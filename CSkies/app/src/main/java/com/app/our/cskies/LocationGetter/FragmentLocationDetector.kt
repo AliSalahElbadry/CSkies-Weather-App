@@ -237,7 +237,7 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener  {
                 fusedLocationProviderClient.removeLocationUpdates(this)
                 loadingAnim.cancelAnimation()
                 loadingAnim.visibility = View.GONE
-                if (!isSetting&&!myLocation&&!isFavorite&&!isAlert) {
+                if (!isSetting&&!isFavorite&&!isAlert) {
                     (requireActivity() as SplashCall).showHome()
                 } else {
                     if (myLocation) {

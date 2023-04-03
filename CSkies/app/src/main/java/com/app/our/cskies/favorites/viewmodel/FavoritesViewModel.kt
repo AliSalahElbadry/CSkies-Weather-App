@@ -58,8 +58,8 @@ class FavoritesViewModel(private val repoClass:RepositoryInterface):ViewModel() 
     }
 
     fun setUpFavoriteLocation(context: Context) {
-        val lat= UserCurrentLocation.latitude?:""
-        val lon= UserCurrentLocation.longitude?:""
+        val lat= UserCurrentLocation.favoriteLat?:""
+        val lon= UserCurrentLocation.favoriteLon?:""
         if(lat.isNotEmpty()&&lon.isNotEmpty()) {
             val lang = Setting.getLang()
             viewModelScope.launch(Dispatchers.IO) {

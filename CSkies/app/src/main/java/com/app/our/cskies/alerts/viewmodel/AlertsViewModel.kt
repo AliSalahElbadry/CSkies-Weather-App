@@ -59,7 +59,6 @@ class AlertsViewModel(val repository: RepositoryInterface) :ViewModel(){
         newAlert.lon=UserCurrentLocation.favoriteLon
     }
     fun setAlertToFrom(toDate:String,fromDate:String,type:Int,address:String,numOfDays:Int){
-        Log.e("","Added............viewModel")
         newAlert.fromDate=fromDate
         newAlert.toDate=toDate
         newAlert.type=type
