@@ -197,7 +197,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@android:drawable/btn_radio"
-                android:text="@string/alerts"
+                android:text="@string/off"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -208,7 +208,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="60dp"
                 android:button="@android:drawable/btn_radio"
-                android:text="@string/off"
+                android:text="@string/on"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -284,20 +284,20 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonApplyChange"
-            android:layout_width="166dp"
-            android:layout_height="53dp"
+            android:layout_width="173dp"
+            android:layout_height="32dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/btn_don_setting_back"
             android:text="@string/apply_changes"
+            android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/radioGroupLang"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.206" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

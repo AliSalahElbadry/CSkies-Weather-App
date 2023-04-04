@@ -23,6 +23,7 @@ import com.app.our.cskies.alerts.utils.AlarmUtils
 import com.app.our.cskies.alerts.viewmodel.AlertViewModelFactory
 import com.app.our.cskies.alerts.viewmodel.AlertsViewModel
 import com.app.our.cskies.databinding.FragmentAlertsPageBinding
+import com.app.our.cskies.dp.AppDataBase
 import com.app.our.cskies.dp.LocalSourceImpl
 import com.app.our.cskies.dp.model.Alert
 import com.app.our.cskies.network.RemoteSourceImpl
@@ -52,7 +53,7 @@ class FragmentAlertsPage : Fragment(),OnClickDeleteAlert{
         binding.recyclerView.layoutManager=LinearLayoutManager(this.context)
         binding.recyclerView.adapter=adapter
         factory= AlertViewModelFactory(Repository.getInstance(
-            LocalSourceImpl.getInstance(requireActivity().applicationContext),
+            LocalSourceImpl.getInstance(AppDataBase.getInstance(requireActivity().applicationContext).getLocationDao()),
             RemoteSourceImpl.getInstance()!!))
         alertsViewModel=ViewModelProvider(this,factory)[AlertsViewModel::class.java]
         alertsViewModel.getAllAlerts()

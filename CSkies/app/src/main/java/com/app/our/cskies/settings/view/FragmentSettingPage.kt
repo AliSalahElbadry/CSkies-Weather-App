@@ -119,15 +119,6 @@ class FragmentSettingPage : Fragment() {
             LanguageUtils.setAppLocale(Setting.getLang(),requireActivity().applicationContext)
             LanguageUtils.setAppLayoutDirections(Setting.getLang(),requireContext().applicationContext)
             LanguageUtils.changeLang(requireActivity().applicationContext,Setting.getLang())
-            /*
-            //restart App
-            val ctx: Context = requireActivity().applicationContext
-            val pm: PackageManager = ctx.packageManager
-            val intent = pm.getLaunchIntentForPackage(ctx.packageName)
-            val mainIntent = Intent.makeRestartActivityTask(intent!!.component)
-            ctx.startActivity(mainIntent)*/
-
-            //restart activity
             requireActivity().finish()
             requireActivity().overridePendingTransition(0, 0)
             startActivity(requireActivity().intent)

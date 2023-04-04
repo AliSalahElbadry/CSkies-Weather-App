@@ -13,6 +13,7 @@ import com.app.our.cskies.LocationGetter.FragmentLocationDetector
 import com.app.our.cskies.R
 import com.app.our.cskies.Repository.Repository
 import com.app.our.cskies.databinding.FragmentFavoritesPageBinding
+import com.app.our.cskies.dp.AppDataBase
 import com.app.our.cskies.dp.LocalSourceImpl
 import com.app.our.cskies.dp.model.Location
 import com.app.our.cskies.favorites.viewmodel.FavoritesViewModel
@@ -42,7 +43,8 @@ class FragmentFavoritesPage : Fragment(),IOnClickItemListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val factory= FavoritesViewModelFactory(Repository.getInstance(LocalSourceImpl.getInstance(requireActivity().applicationContext),
+        val factory= FavoritesViewModelFactory(Repository.getInstance(LocalSourceImpl.getInstance(
+            AppDataBase.getInstance(requireActivity().applicationContext).getLocationDao()),
             RemoteSourceImpl.getInstance()!!))
         favoritesViewModel= ViewModelProvider(this,factory)[FavoritesViewModel::class.java]
         requireActivity().title = resources.getString(R.string.favorites)

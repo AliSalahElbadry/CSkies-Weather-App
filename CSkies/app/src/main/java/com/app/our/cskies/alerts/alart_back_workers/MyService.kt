@@ -8,6 +8,7 @@ import android.graphics.PixelFormat
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.IBinder
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -20,10 +21,12 @@ import androidx.core.app.NotificationManagerCompat
 import com.app.our.cskies.R
 import com.app.our.cskies.Repository.Repository
 import com.app.our.cskies.alerts.utils.AlarmUtils
+import com.app.our.cskies.dp.AppDataBase
 import com.app.our.cskies.dp.LocalSourceImpl
 import com.app.our.cskies.dp.model.Alert
 import com.app.our.cskies.network.ApiState
 import com.app.our.cskies.network.RemoteSourceImpl
+import com.app.our.cskies.shard_pref.SharedPrefOps
 import com.app.our.cskies.utils.Setting
 import com.app.our.cskies.utils.UserCurrentLocation
 import com.app.our.cskies.utils.UserStates
@@ -34,8 +37,9 @@ class MyService : Service() {
     private val notificationId: Int=1997169
     private var CHANNEL_ID: String="channel_1234_Skies"
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        SharedPrefOps(this@MyService).loadLocationData()
         val alert = intent?.getSerializableExtra("alarm") as Alert
-        val repo = Repository.getInstance(LocalSourceImpl.getInstance(this), RemoteSourceImpl.getInstance()!!)
+        val repo = Repository.getInstance(LocalSourceImpl.getInstance(AppDataBase.getInstance(this).getLocationDao()), RemoteSourceImpl.getInstance()!!)
         if (UserStates.checkConnectionState(this)) {
             CoroutineScope(Dispatchers.IO).launch {
                 repo.getWeatherData(alert.lat, alert.lon, lang = Setting.getLang()).collect { apiState ->
@@ -138,7 +142,7 @@ class MyService : Service() {
 
     @SuppressLint("MissingPermission")
     private fun showAlarmOrNotification(msg: String, type: Int) {
-        if (type == 0) {
+        if (type == 0&&Setting.notificationState==Setting.NotificationState.ON) {
             val player=MediaPlayer.create(this@MyService,R.raw.alarm)
             player.isLooping=true
             val alarmLayout=LayoutInflater.from(this@MyService).inflate(R.layout.fragment_alarm,null)
@@ -162,7 +166,8 @@ class MyService : Service() {
             windowManager.addView(alarmLayout,layoutParams)
             player.start()
             alarmLayout.visibility=View.VISIBLE
-        } else {
+            Log.e("",(Setting.notificationState==Setting.NotificationState.ON).toString())
+        } else if(type==1&&Setting.notificationState==Setting.NotificationState.ON) {
             createNotificationChannel()
             val remoteViewsHead = RemoteViews(this@MyService.packageName, R.layout.notification_layout_head)
             val remoteViewsContent = RemoteViews(this@MyService.packageName, R.layout.notification_layout_content)

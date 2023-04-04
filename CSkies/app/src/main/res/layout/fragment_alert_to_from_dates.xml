@@ -76,7 +76,6 @@
 
         <RadioButton
             android:id="@+id/radioButtonAlarmAlert"
-            style="@style/Widget.Material3.CompoundButton.RadioButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:button="@android:drawable/btn_radio"
@@ -87,7 +86,6 @@
 
         <RadioButton
             android:id="@+id/radioButtonNotifiAlert"
-            style="@style/Widget.Material3.CompoundButton.RadioButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"

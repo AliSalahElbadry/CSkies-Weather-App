@@ -1,18 +1,17 @@
-package com.app.our.cskies
+package com.app.our.cskies.dp
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.asLiveData
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
-import com.app.our.cskies.dp.AppDataBase
-import com.app.our.cskies.dp.LocationDAO
+import com.app.our.cskies.MainRule
 import com.app.our.cskies.dp.model.Alert
 import com.app.our.cskies.dp.model.DayWeather
 import com.app.our.cskies.dp.model.HourWeather
 import com.app.our.cskies.dp.model.Location
+import com.app.our.cskies.getOrAwaitValue
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.*
 import org.hamcrest.MatcherAssert.assertThat

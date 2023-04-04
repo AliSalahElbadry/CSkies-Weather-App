@@ -31,7 +31,6 @@
 
     <CheckBox
         android:id="@+id/checkBoxtemp"
-        style="@style/Widget.Material3.CompoundButton.CheckBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
@@ -52,7 +51,6 @@
 
     <CheckBox
         android:id="@+id/checkBoxhum"
-        style="@style/Widget.Material3.CompoundButton.CheckBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
@@ -72,7 +70,6 @@
 
     <CheckBox
         android:id="@+id/checkBoxVis"
-        style="@style/Widget.Material3.CompoundButton.CheckBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
@@ -92,7 +89,6 @@
 
     <CheckBox
         android:id="@+id/checkBoxWS"
-        style="@style/Widget.Material3.CompoundButton.CheckBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
@@ -113,7 +109,6 @@
 
     <CheckBox
         android:id="@+id/checkBoxPress"
-        style="@style/Widget.Material3.CompoundButton.CheckBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"

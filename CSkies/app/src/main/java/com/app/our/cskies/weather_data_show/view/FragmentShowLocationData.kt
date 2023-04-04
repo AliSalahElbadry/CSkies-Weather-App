@@ -16,6 +16,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.app.our.cskies.R
 import com.app.our.cskies.Repository.Repository
 import com.app.our.cskies.databinding.FragmentShowLocationDataBinding
+import com.app.our.cskies.dp.AppDataBase
 import com.app.our.cskies.dp.LocalSourceImpl
 import com.app.our.cskies.model.LocationData
 import com.app.our.cskies.network.ApiState
@@ -52,7 +53,7 @@ class FragmentShowLocationData : Fragment() {
         loadingAnim=view.findViewById(R.id.loadingAnimHome)
         binding.pullToRefresh.visibility=View.INVISIBLE
         factory = LocationDataViewModelFactory(Repository.getInstance(
-            LocalSourceImpl.getInstance(requireActivity().applicationContext),
+            LocalSourceImpl.getInstance(AppDataBase.getInstance(requireActivity().applicationContext).getLocationDao()),
             RemoteSourceImpl.getInstance()!!))
 
         locationDataViewModel=ViewModelProvider(this, factory)[LocationDataViewModel::class.java]

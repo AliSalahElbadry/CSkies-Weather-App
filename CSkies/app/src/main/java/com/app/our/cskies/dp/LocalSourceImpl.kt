@@ -1,6 +1,5 @@
 package com.app.our.cskies.dp
 
-import android.content.Context
 import android.util.Log
 import com.app.our.cskies.dp.model.Alert
 import com.app.our.cskies.dp.model.DayWeather
@@ -9,19 +8,17 @@ import com.app.our.cskies.dp.model.Location
 import com.app.our.cskies.model.LocationData
 import com.app.our.cskies.utils.Setting
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flow
 
-class LocalSourceImpl private constructor(context: Context) :LocalDataSource {
-    private val locationOps=AppDataBase.getInstance(context).getLocationDao()
+class LocalSourceImpl private constructor(private val locationOps:LocationDAO) :LocalDataSource {
+
 
     companion object{
         private  var localDataSource: LocalSourceImpl?=null
-        fun getInstance(context: Context):LocalDataSource
+        fun getInstance(locationOps:LocationDAO):LocalDataSource
         {
             if(localDataSource ==null)
             {
-                localDataSource = LocalSourceImpl(context)
+                localDataSource = LocalSourceImpl(locationOps)
             }
             return localDataSource!!
         }
