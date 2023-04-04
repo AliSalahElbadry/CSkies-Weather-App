@@ -1,5 +1,7 @@
 package com.app.our.cskies.utils
 
+import kotlin.math.roundToInt
+
 object Converter {
     fun getImageUrl(iconCode:String):String{
      return Constants.IMG_URL + "${iconCode}.png"
@@ -20,7 +22,7 @@ object Converter {
     fun getWindSpeed(w:Int):String{
        return if(Setting.wSpeed==Setting.WSpeed.MILE_HOUR)
         {
-            "${(w.toFloat()/1609.344)} Mile/H"
+            "${(w/1609.344).roundToInt()} Mile/H"
         }else{
            "$w M/S"
         }

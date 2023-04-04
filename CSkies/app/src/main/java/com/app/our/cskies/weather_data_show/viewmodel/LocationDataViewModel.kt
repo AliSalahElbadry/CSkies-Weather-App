@@ -10,6 +10,7 @@ import com.app.our.cskies.model.LocationData
 import com.app.our.cskies.utils.Setting
 import com.app.our.cskies.utils.UserCurrentLocation
 import com.app.our.cskies.network.ApiState
+import com.app.our.cskies.utils.UserStates
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -63,15 +64,18 @@ class LocationDataViewModel(private val repoClass: Repository):ViewModel() {
         }
     }
     fun getCurrentLocation() {
+
         viewModelScope.launch(Dispatchers.IO) {
             repoClass.getCurrentLocation(true).collect{
-                var locationData=LocationData(it, listOf(), listOf())
-                repoClass.selectHoursInLocation(it.address).collect{hours->
-                    locationData.hours=hours
-                    repoClass.selectDaysOfLocation(it.address).collect{days->
-                        locationData.days=days
-                        withContext(Dispatchers.Main) {
-                            _stateFlow.value = ApiState.TransformedState(locationData)
+                if(it!=null) {
+                    val locationData = LocationData(it, listOf(), listOf())
+                    repoClass.selectHoursInLocation(it.address).collect { hours ->
+                        locationData.hours = hours
+                        repoClass.selectDaysOfLocation(it.address).collect { days ->
+                            locationData.days = days
+                            withContext(Dispatchers.Main) {
+                                _stateFlow.value = ApiState.TransformedState(locationData)
+                            }
                         }
                     }
                 }

@@ -11,6 +11,7 @@ import com.app.our.cskies.alerts.view.FragmentListOfAlerts
 import com.app.our.cskies.databinding.FragmentInitSettingsBinding
 import com.app.our.cskies.utils.Dialogs
 import com.app.our.cskies.utils.Setting
+import com.app.our.cskies.utils.UserStates
 
 
 class InitSetting : DialogFragment() {
@@ -27,7 +28,8 @@ class InitSetting : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.initSettingDone.setOnClickListener{
-           if(binding.radioGroupLoactionInit.checkedRadioButtonId!=-1&&binding.radioGroupNotifInit.checkedRadioButtonId!=-1){
+            if(UserStates.checkConnectionState(requireActivity())) {
+                if(binding.radioGroupLoactionInit.checkedRadioButtonId!=-1&&binding.radioGroupNotifInit.checkedRadioButtonId!=-1){
                if(binding.radioGroupLoactionInit.checkedRadioButtonId==R.id.radioButtonGpsInit)
                {
                    Setting.location= Setting.Location.GPS
@@ -49,7 +51,10 @@ class InitSetting : DialogFragment() {
                dismiss()
            }else{
                Dialogs.SnakeToast(it,"Please Select All Required Data")
-           }
+              }
+            }else{
+                Dialogs.SnakeToast(view,if(Setting.getLang()=="en")"Network Error" else "مشكلة في الاتصال ")
+            }
         }
     }
 

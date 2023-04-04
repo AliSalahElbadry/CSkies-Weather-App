@@ -36,12 +36,13 @@ class ActivitySplash : AppCompatActivity(), SplashCall {
                 delay(3000)
             }.join()
             val initSetting=getSharedPreferences("setting",Context.MODE_PRIVATE)
-            if(!initSetting.contains("location")&&UserStates.checkConnectionState(this@ActivitySplash))
+            if(!initSetting.contains("location"))
             {
                 val initFragment = InitSetting()
                 initFragment.isCancelable = false
                 val manager = supportFragmentManager
                 initFragment.show(manager,null)
+
             }else {
                val pref= SharedPrefOps(applicationContext)
                 pref.loadData()

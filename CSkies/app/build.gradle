@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -74,6 +75,7 @@ dependencies {
     //location
     implementation 'com.google.android.gms:play-services-location:21.0.1'
     implementation "com.google.android.gms:play-services-places:17.0.0"
+    implementation 'com.google.android.libraries.places:places:3.0.0'
 
 
     //notification

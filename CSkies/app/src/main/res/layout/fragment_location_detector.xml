@@ -34,7 +34,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/my_location_svgrepo_com" />
 
-    <SearchView
+    <androidx.appcompat.widget.SearchView
         android:id="@+id/searchViewPlace"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
