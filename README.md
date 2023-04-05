@@ -5,6 +5,7 @@
  text and add it to a list of favorite locations  get all the weather information at this location.
 * you can set an alert for rain, wind, very low or very high temperature, fog, snow … etc
 * The App Support English / Arabic Languages
+# App SDK Version 33
 
 ### these Application are developed by student of ITI intake#43, Native Mobile Application Development track.
 
