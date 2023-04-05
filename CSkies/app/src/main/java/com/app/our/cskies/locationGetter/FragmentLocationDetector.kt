@@ -1,4 +1,4 @@
-package com.app.our.cskies.LocationGetter
+package com.app.our.cskies.locationGetter
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -13,7 +13,6 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
-import android.os.Looper
 import android.provider.BaseColumns
 import android.provider.Settings
 import android.util.Log
@@ -45,6 +44,7 @@ import com.google.android.gms.location.*
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.tasks.CancellationToken
 import com.google.android.gms.tasks.Task
 import java.util.*
 
@@ -265,16 +265,10 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener  {
         }
     }
     @SuppressLint("MissingPermission")
-    fun requestLocationUpdates(
-        request: LocationRequest,
-        callback: LocationCallback,
-        myLooper: Looper
-    ) : Task<Void> {
+    fun getCurrentLocation(request: CurrentLocationRequest, token: CancellationToken?): Task<Location>{
         fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(this.requireActivity())
-        return fusedLocationProviderClient.requestLocationUpdates(
-            request,
-            callback, myLooper
-        )
+
+        return fusedLocationProviderClient.getCurrentLocation(request,token)
     }
 
     private fun getLastLocation():Unit{
@@ -293,13 +287,15 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener  {
         }
     }
     private val PermissionID: Int=10
-    private  val myCallback=object :LocationCallback(){
-        @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-        override fun onLocationResult(result: LocationResult) {
-            super.onLocationResult(result)
+
+    private fun requestNewLoaction(){
+        val currentLocationRequest=CurrentLocationRequest.Builder()
+            .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
+            .build()
+        getCurrentLocation(currentLocationRequest,null).addOnSuccessListener {
             try {
-                val latitude = result.lastLocation?.latitude
-                val longtude = result.lastLocation?.longitude
+                val latitude = it.latitude
+                val longtude = it.longitude
                 UserCurrentLocation.latitude = latitude.toString()
                 UserCurrentLocation.longitude = longtude.toString()
                 val pref = SharedPrefOps(requireActivity().applicationContext)
@@ -315,7 +311,7 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener  {
                         myLocation=false
                         imageButtonMyLocation.visibility = View.VISIBLE
                         val cameraUpdate =
-                            CameraUpdateFactory.newLatLngZoom(LatLng(latitude!!, longtude!!), 10F)
+                            CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longtude), 10F)
                         if (!isFavorite && !isAlert) {
                             UserCurrentLocation.latitude = latitude.toString()
                             UserCurrentLocation.longitude = longtude.toString()
@@ -330,7 +326,7 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener  {
                     } else {
                         val ftragmentSettings = FragmentSettingPage()
                         ftragmentSettings.isLocationMapSet = true
-                        activity!!.supportFragmentManager.beginTransaction()
+                        requireActivity().supportFragmentManager.beginTransaction()
                             .replace(R.id.my_host_fragment, ftragmentSettings, null)
                             .addToBackStack(null)
                             .commit()
@@ -341,13 +337,6 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener  {
                 Log.e("error",e.toString())
             }
         }
-    }
-
-    private fun requestNewLoaction(){
-        val request=LocationRequest()
-        request.priority=LocationRequest.PRIORITY_HIGH_ACCURACY
-        request.interval=0
-        requestLocationUpdates(request,myCallback, Looper.myLooper()!!)
     }
 
     private fun checkPermissions(): Boolean{

@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.app.our.cskies.LocationGetter.FragmentLocationDetector
+import com.app.our.cskies.locationGetter.FragmentLocationDetector
 import com.app.our.cskies.R
 import com.app.our.cskies.databinding.FragmentSettingPageBinding
 import com.app.our.cskies.shard_pref.SharedPrefOps

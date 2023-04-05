@@ -5,9 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import com.app.our.cskies.LocationGetter.FragmentLocationDetector
+import com.app.our.cskies.locationGetter.FragmentLocationDetector
 import com.app.our.cskies.R
-import com.app.our.cskies.alerts.view.FragmentListOfAlerts
 import com.app.our.cskies.databinding.FragmentInitSettingsBinding
 import com.app.our.cskies.utils.Dialogs
 import com.app.our.cskies.utils.Setting
